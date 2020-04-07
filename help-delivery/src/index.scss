@@ -1,0 +1,40 @@
+.container-sides{
+    display: flex;
+    max-width: 100%;
+
+    .container-left{
+        max-width: 50%;
+    }
+    
+    .container-rigth{
+        max-width: 50%;
+    }
+
+    @media screen  and (max-width:700px){
+        flex-direction: column;
+    }
+}
+
+.display-b{
+    display: block;
+}
+
+.ac{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card{
+    padding: 10px;
+    display: block;
+    max-width: 100%;
+    // min-height: 200px;
+    border-radius: 10px;
+    box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.205);
+    background-color: rgb(245, 245, 245);
+}
+
+.title{
+    font-size: 25px;
+    font-family: 'Poppins', sans-serif;
+}
