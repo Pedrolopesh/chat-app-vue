@@ -4,7 +4,6 @@ import Toolbar from '../../components/ToolBar'
 import SideBar from '../../components/SideBar'
 import FooterMenu from '../../components/footerMenu'
 import DescriptionModal from '../../components/DescriptionModal';
-
 import './style.scss'
 import { IoIosPin, IoMdCart } from 'react-icons/io';
 import { Card } from 'antd';
