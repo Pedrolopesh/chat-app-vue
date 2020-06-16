@@ -4,7 +4,7 @@ import { Modal } from 'antd';
 export default class DescriptionModal extends React.Component {
 
     state ={
-        visible: this.props.propsTeste
+        visible: true,
     };
 
     // constructor(props) {
@@ -14,11 +14,15 @@ export default class DescriptionModal extends React.Component {
     // }
 
     hideModal = () =>{
-        console.log("asaasasa")
-        console.log(this.props.propsTeste)
+        let newStateTest = false
+        this.setState({
+            test: newStateTest
+        })
+        console.log(this.state.test)
     }
 
     showModal = () => {
+        console.log("FOI")
         this.setState({
           visible: true,
         });
@@ -43,7 +47,7 @@ render(){
     return (
         <div className="header">
             <div>
-                <button onClick={this.hideModal}></button>
+                <button onClick={this.hideModal}>aaaaaa</button>
                 <Modal
                 title="Basic Modal"
                 visible={this.state.visible}

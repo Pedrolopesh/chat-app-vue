@@ -10,9 +10,11 @@ import { Card } from 'antd';
 
 
 export default class Dashboard extends React.Component{
+
 state = {
     sideBarOpen: false,
     descriptionModal:false,
+    bolean: false,
 
     itens: [
         {case: 1, address:"Trindade, Florianópolis", placeName:"mercado 1", description:"descrição sobre o que a pessoa quer", fee:1},
@@ -38,7 +40,7 @@ openDescriptionModal = () =>{
     this.setState({
         descriptionModal:true
     })
-    console.log("Função que manda novo estado para componente")
+    // console.log("Função que manda novo estado para componente")
 }
 
 render(){
@@ -47,12 +49,7 @@ render(){
     // if(this.state.sideBarOpen){
     //     sideBar = <SideBar />;
     // }
-    let propsData = this.state.descriptionModal;
-    function openDescriptionModal() {
-        let newProps = true
-        propsData = newProps
-        console.log( propsData )
-    }
+
 
     return (
         <div>
@@ -63,7 +60,7 @@ render(){
             {/* descriptionModalHandler={() => this.openDescriptionModal()} */}
             {/* {this.state.descriptionModal && <DescriptionModal/> } */}
 
-            <DescriptionModal propsTeste={propsData}/>
+            <DescriptionModal propsTeste={() => this.props.showModal()}/>
 
             {this.state.sideBarOpen && <SideBar sideBarClickHandler={() => this.closeSidebar()} />}
 
@@ -72,7 +69,7 @@ render(){
 
                 {this.state.itens.map((item, key) => 
      
-                    <Card onClick={openDescriptionModal} className="card-dashboard ac mt-3">
+                    <Card onClick={this.openDescriptionModal} className="card-dashboard ac mt-3">
 
                         <div>
                         <p>Caso {this.state.itens[key].case}</p>
