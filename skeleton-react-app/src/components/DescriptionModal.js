@@ -4,7 +4,7 @@ import { Modal } from 'antd';
 export default class DescriptionModal extends React.Component {
 
     state ={
-        visible: true,
+        visible: false,
     };
 
     // constructor(props) {
@@ -47,7 +47,7 @@ render(){
     return (
         <div className="header">
             <div>
-                <button onClick={this.hideModal}>aaaaaa</button>
+                <button onClick={this.showModal}>aaaaaa</button>
                 <Modal
                 title="Basic Modal"
                 visible={this.state.visible}
