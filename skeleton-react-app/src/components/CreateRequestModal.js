@@ -1,27 +1,29 @@
 import React from 'react'
 import { Modal, Button } from 'antd';
 
-export default class CreateRequest extends React.Component {
-    state = { visible: true };
+export default class CreateRequestModal extends React.Component {
+    state = { visible: this.props.visible};
 
-    showModal = () => {
-        this.setState({
-          visible: true,
-        });
-      };
+    // showModal = () => {
+    //     this.setState({
+    //       visible: true,
+    //     });
+    //   };
     
       handleOk = e => {
         console.log(e);
-        this.setState({
-          visible: false,
-        });
+        this.props.hideModal();
+        // this.setState({
+        //   visible: false,
+        // });
       };
     
       handleCancel = e => {
         console.log(e);
-        this.setState({
-          visible: false,
-        });
+        this.props.hideModal();
+        // this.setState({
+        //   visible: false,
+        // });
       };
     
 
