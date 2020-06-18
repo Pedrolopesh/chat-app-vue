@@ -32,7 +32,7 @@ body{
 }
 
 .display-b{
-    display: block;
+    display: block !important;
 }
 
 .display-f{
@@ -143,6 +143,29 @@ body{
 // ============== MARGINS TOP ==============
 
 
+// ============== PADINGS ==============
+
+.p10{
+    padding: 10px;
+}
+
+.p15{
+    padding: 15px;
+}
+
+.p20{
+    padding: 20px;
+}
+
+.p25{
+    padding: 25px;
+}
+
+.p30{
+    padding: 30px;
+}
+
+// ============== PADINGS ==============
 
 // ============== MARGINS BOTTOM ==============
 
@@ -309,4 +332,25 @@ body{
 .icon-size-4{
     width: 40px;
     height: 40px;
+}
+
+.footerBar{
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    padding: 15px;
+    max-width: 70%;
+    width: 100%;
+    box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.205);
+    border-radius: 45px 45px 0px 0px;
+}
+
+.footerButton{
+    display: block;
+    border:none;
+    background-color: rgba(255, 255, 255, 0);
+    fill: none;
+}
+
+.size-footer-icons{
+    font-size: 30px;
 }

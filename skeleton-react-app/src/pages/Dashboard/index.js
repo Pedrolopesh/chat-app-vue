@@ -52,7 +52,7 @@ render(){
 
 
     return (
-        <div>
+        <>
 
             <Toolbar sideBarClickHandler={this.ToggleSideBar}/>
 
@@ -92,7 +92,7 @@ render(){
             <FooterMenu/>
             
 
-        </div>
+        </>
         
         )
 

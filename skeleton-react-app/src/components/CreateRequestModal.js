@@ -1,5 +1,7 @@
 import React from 'react'
-import { Modal, Button } from 'antd';
+import { Modal, Button, Input, InputNumber } from 'antd';
+
+const { TextArea } = Input;
 
 export default class CreateRequestModal extends React.Component {
     state = { visible: this.props.visible};
@@ -36,13 +38,28 @@ export default class CreateRequestModal extends React.Component {
               onOk={this.handleOk}
               onCancel={this.handleCancel}
             >
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
 
-            <Button type="primary">
-              Create event
-            </Button>
+            <div className="p10">
+              <Input className="mt-1" placeholder="Titulo do caso"/>
+
+              <Input className="mt-3" placeholder="Nome do Lugar"/>
+
+            <div className="mt-3">
+              <span>Taxa do pedido:</span>
+              <InputNumber
+                className=""
+                defaultValue={10}
+                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                />
+            </div>
+
+              <TextArea className="mt-3" rows={4} placeholder="Descrição: "/>
+
+              <Button className="mt-3 ac display-b" type="primary">
+                Create event
+              </Button>
+            </div>  
 
             </Modal>
           </div>

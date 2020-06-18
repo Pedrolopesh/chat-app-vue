@@ -1,13 +1,14 @@
 import React from 'react';
-import { Button  } from 'antd';
+// import { Button  } from 'antd';
 import { Link } from 'react-router-dom';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, HomeOutlined, SettingOutlined } from '@ant-design/icons';
 import CreateRequest from './CreateRequestModal'
+
 
 export default class footerMenu extends React.Component{
 
     state = {
-        visible: false
+        visible: true
     }
 
     openModalToCreate = () => {
@@ -25,14 +26,26 @@ export default class footerMenu extends React.Component{
     render(){
         return (
 
-            <div>
-                <p>{this.state.visible + 'haa'}</p>
+            <>
+                {/* <p>{this.state.visible + 'haa'}</p> */}
                 { this.state.visible && <CreateRequest  hideModal={() => this.hideModal()} visible={this.state.visible}/>}
-                <h1>FOOTER</h1>
-                <Button><Link to="/Dashboard"> Home </Link></Button>
-                <Button shape="round" onClick={this.openModalToCreate} icon={<PlusOutlined />}/> 
-                <Button><Link to="/Settings"> Settings </Link></Button>
-            </div>
+                {/* <h1>FOOTER</h1> */}
+                <footer className="footerBar ac mt-15">
+
+                    <button className="footerButton ac">
+                        <Link to="/Dashboard"><HomeOutlined className="size-footer-icons"/></Link>
+                    </button>
+
+                    <button onClick={this.openModalToCreate} className="footerButton size-footer-icons ac">
+                        <PlusOutlined/>
+                    </button>
+
+                    <button className="footerButton size-footer-icons ac">
+                        <Link to="/Settings"><SettingOutlined/></Link>
+                    </button>
+
+                </footer>
+            </>
         
         )
     }
