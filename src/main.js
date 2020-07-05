@@ -9,7 +9,6 @@ import './registerServiceWorker'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import Vuesax from 'vuesax'
-import Chat from 'vue-beautiful-chat'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -18,7 +17,6 @@ import 'material-icons/iconfont/material-icons.css';
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-Vue.use(Chat)
 
 Vue.prototype.$http = axios
 Vue.prototype.$url = process.env.VUE_APP_PROD_URL

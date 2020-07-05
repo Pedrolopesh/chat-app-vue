@@ -1,6 +1,7 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
 @import './components.scss';
+@import './chatStyle.scss';
 @import './_align.scss';
 
 
@@ -67,4 +68,14 @@
     display: block;
     max-width: 100%;
     width: 100%;
+}
+
+.close-icon{
+    font-size: 30px;
+    // width: 30px;
+    // height: 30px;
+}
+
+.cp{
+    cursor: pointer;
 }

@@ -16,7 +16,7 @@
 
         <vs-button type="line" class="mt-3 btn-sidebar" icon="home">Início</vs-button>
         <vs-button type="line" class="mt-3 btn-sidebar" icon="add">Criar Pedido</vs-button>
-        <vs-button to="/Chat" type="line" class="mt-3 btn-sidebar" icon="chat">Conversas</vs-button>
+        <vs-button to="/ChatList" type="line" class="mt-3 btn-sidebar" icon="chat">Conversas</vs-button>
         <vs-button to="/ConfigAccount" type="line" class="mt-3 btn-sidebar"> <BIconGear/>Configurações </vs-button>
         <vs-button to="/Home" type="line" class="mt-3 btn-sidebar" icon="logout">Sair</vs-button>
 

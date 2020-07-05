@@ -49,7 +49,18 @@ Vue.use(VueRouter)
           path: '/DashBoard',
           name: 'DashBoard',
           component: () => import('../views/private/DashBoard.vue') 
-        }
+        },
+        {
+          path: '/UserPreferences',
+          name: 'UserPreferences',
+          component: () => import('../views/private/UserPreferences.vue') 
+        },
+        {
+          path: '/ChatList',
+          name: 'ChatList',
+          component: () => import('../views/private/ChatList.vue') 
+        },
+
       ]
     }
 
