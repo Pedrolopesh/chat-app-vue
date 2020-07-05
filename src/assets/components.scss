@@ -1,0 +1,21 @@
+.card-style-1{
+    display: block !important;
+    border-radius: 10px !important;
+    box-shadow: 7px 6px 15px rgba(110, 110, 110, 0.424) !important;
+}
+.card-style-2{
+    display: block !important;
+    border-radius: 10px !important;
+    box-shadow: 7px 6px 15px rgba(110, 110, 110, 0.424) !important;
+
+    &:hover{
+        cursor: pointer;
+        transition: 0.3s;
+        transform: scale(1.03);
+    }
+}
+
+.description-area{
+    display: block;
+    max-width: 60% !important;
+}

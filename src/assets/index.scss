@@ -1,0 +1,70 @@
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+@import './components.scss';
+@import './_align.scss';
+
+
+.bg-white{
+    background-color: rgb(255, 255, 255) !important;
+}
+
+.bg-grey{
+    background-color: #E9E9E9 !important;
+}
+.bg-red{
+    background-color: #ff5252 !important;
+}
+
+.bg-yellow{
+    // background-color: #fb8c00  !important;
+    background-image: linear-gradient(to right, #fb8c00 , #fb6400);
+}
+.bg-primary{
+    // background-color: #2196f3 !important;
+    background-image: linear-gradient(to right, #2196f3 , #1a64d4);
+}
+
+.bg-sucess{
+    background-color: #4caf50 !important
+}
+.bg-dark-blue{
+    background-color: #11187e !important
+}
+
+.ac{
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.display-b{
+    display: block !important;
+}
+.display-f{
+    display: flex !important;
+}
+
+.clr-o{
+    color: #fb8c00;
+}
+
+.clr-whi{
+    color: white;
+}
+
+.clr-red{
+    color: #F44336;
+}
+
+.clr-primary{
+    color: #1976d2;
+}
+
+.clr-sucess{
+    color: #4caf50 !important;
+}
+
+.img-size{
+    display: block;
+    max-width: 100%;
+    width: 100%;
+}
