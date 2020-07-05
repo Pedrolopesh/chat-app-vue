@@ -14,8 +14,28 @@
         transform: scale(1.03);
     }
 }
+.btn-sidebar{
+    max-width: 100%;
+    width: 100%;
+    text-align: start !important;
+
+    span{
+        margin-right: auto !important;
+    }
+}
 
 .description-area{
     display: block;
     max-width: 60% !important;
+}
+
+.tutorial-card{
+    display: block;
+    max-width: 100%;
+    width: 70%;
+    
+    @media screen and (max-width: 700px){
+        max-width: 100%;
+        width: 100%;
+    }
 }

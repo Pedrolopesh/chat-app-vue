@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <v-btn to="/Login">LOGIN</v-btn>
-    <v-btn to="/Signup">SIGNUP</v-btn>
-    <v-btn to="/DashBoard">DASHBOARD</v-btn>
+    <b-btn to="/Login">LOGIN</b-btn>
+    <b-btn to="/Signup">SIGNUP</b-btn>
+    <b-btn to="/DashBoard">DASHBOARD</b-btn>
   </div>
 </template>
 

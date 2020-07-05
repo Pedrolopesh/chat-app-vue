@@ -8,13 +8,19 @@
       </b-row>
     </b-container>
 
-    <b-sidebar id="sidebar-1" title="Sidebar" shadow>
+    <b-sidebar id="sidebar-1" title="Menu" shadow>
       <div class="px-3 py-2">
         <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-          in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+          um app ideal para o momento da crise pandemica
         </p>
-        <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img>
+
+        <vs-button type="line" class="mt-3 btn-sidebar" icon="home">Início</vs-button>
+        <vs-button type="line" class="mt-3 btn-sidebar" icon="add">Criar Pedido</vs-button>
+        <vs-button to="/Chat" type="line" class="mt-3 btn-sidebar" icon="chat">Conversas</vs-button>
+        <vs-button to="/ConfigAccount" type="line" class="mt-3 btn-sidebar"> <BIconGear/>Configurações </vs-button>
+        <vs-button to="/Home" type="line" class="mt-3 btn-sidebar" icon="logout">Sair</vs-button>
+
+        <!-- <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img> -->
       </div>
     </b-sidebar>
 
@@ -27,11 +33,13 @@
 
 <script>
 import modalData from './cpmModalData'
+import { BIconGear } from 'bootstrap-vue'
 
 export default {
   name: 'ComponentHeader',
   components:{
-    modalData
+    modalData,
+    BIconGear
   }
 }
 </script>
