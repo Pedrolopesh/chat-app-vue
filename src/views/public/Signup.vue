@@ -20,8 +20,8 @@
                         <vs-button to="/About" class="mt-3" type="gradient">Cadastrar</vs-button>
 
                         <span class="display-b mt-3">
-                            já possui cadastro? 
-                            <a>faça o login</a>
+                            já possui cadastro?
+                            <a @click="goToLogin()">faça o login</a>
                         </span>
                     </b-card>
                 </b-col>
@@ -38,6 +38,13 @@ export default {
             email:'',
             password:''
         }
-    })
+    }),
+
+    
+    methods: {
+        goToLogin(){
+            this.$router.push('/Login')
+        }
+    },
 }
 </script>

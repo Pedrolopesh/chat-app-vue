@@ -53,7 +53,7 @@
                         <strong class="display-b mt-2">{{ userRequestData.adrres }}</strong>
                     </div>
 
-                    <vs-button to="/" class="mt-4" color="primary" type="gradient">
+                    <vs-button @click="iniciateChat(userRequestData)" class="mt-4" color="primary" type="gradient">
                         Iniciar Chat
                         <BIconChat/>
                     </vs-button>
@@ -105,6 +105,10 @@ export default {
         OpenInfoModal(param){
             this.changeUserRequestData(param)
             this.showModal()
+        },
+
+        iniciateChat(param){
+            console.log(param)
         },
 
         showModal() {
