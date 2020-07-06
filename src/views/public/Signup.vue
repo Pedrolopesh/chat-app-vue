@@ -15,13 +15,13 @@
                         <h2>Cadastro</h2>
 
                         <div class="centerx">
-                            <vs-input class="ac mt-4" type="text" placeholder="Email" v-model="userForm.name"/>
-                            <vs-input class="ac mt-4" type="text" placeholder="Email" v-model="userForm.name"/>
+                            <vs-input class="ac mt-4" type="text" placeholder="Nome" v-model="userForm.name"/>
+                            <vs-input class="ac mt-4" type="text" placeholder="Email" v-model="userForm.email"/>
                             <vs-input class="ac mt-4" type="number" placeholder="phone" v-model="userForm.phone"/>
-                            <vs-input class="ac mt-4" type="text" placeholder="password" v-model="userForm.password"/>
+                            <vs-input class="ac mt-4" type="password" placeholder="password" v-model="userForm.password"/>
                         </div>
 
-                        <vs-button to="/About" class="mt-3" type="gradient">Cadastrar</vs-button>
+                        <vs-button @click="signup" class="mt-3" type="gradient">Cadastrar</vs-button>
 
                         <span class="display-b mt-3">
                             já possui cadastro?
@@ -39,6 +39,7 @@ import Svgs from '../../assets/svgs/svgSet'
 
 export default {
     data:() => ({
+        url:process.env.VUE_APP_PROD_URL,
         Svgs:Svgs,
         userForm:{
             name:'',
@@ -52,6 +53,21 @@ export default {
     methods: {
         goToLogin(){
             this.$router.push('/Login')
+        },
+
+        signup(){
+            let body = {
+                name:this.userForm.name,
+                email:this.userForm.email,
+                phone:this.userForm.phone,
+                password:this.userForm.password
+            }
+
+            this.$http.post(process.env.VUE_APP_PROD_URL + '/signup', body).then(response => {
+                console.log(response)
+            }).catch(err => {
+                console.log(err)
+            })
         }
     },
 }
