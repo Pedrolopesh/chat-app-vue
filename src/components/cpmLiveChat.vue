@@ -6,7 +6,7 @@
 
         <div class="header-container-chat">
           <h3 class="clr-whi display-b ml-2">Live chat</h3>
-          <BIconX class="clr-whi cp display-b ml-a close-icon"/>
+          <BIconX @click="closeChat()" class="clr-whi cp display-b ml-a close-icon"/>
         </div>
 
         <!-- MENSAGEM RECIBIDA -->
@@ -48,6 +48,9 @@
 
 <script>
 import { BIconX, BIconCursor } from 'bootstrap-vue'
+import {
+  mapGetters, mapActions
+} from 'vuex';
 // import fb from '@/firebase/init';
 // import moment from 'moment'
 
@@ -55,7 +58,7 @@ export default {
     data:() => ({
         newMessage:'',
         author:'Pedro Lopes',
-        socket: io('http://localhost:3333'),
+        // socket: io('http://localhost:3333'),
 
         messagens:[
           {sendedName:'Fernanda', SendedMessage:'olá pedro, esse vai ser o nosso chat', sendedTimestamp:'08:00'}
@@ -94,6 +97,13 @@ export default {
       BIconCursor
     },
     methods: {
+        ...mapActions({
+            changeChatSteper: 'changeChatSteper'
+        }),
+
+        closeChat(){
+          this.changeChatSteper(1)
+        }
       // createMessage(){
       //   if(this.newMessage){
       //     fb.collection('messages').add({
@@ -110,23 +120,23 @@ export default {
       //   }
       // }
 
-      createMessage(){
+      // createMessage(){
         
-        if(this.author.length && this.newMessage.length != ''){
+      //   if(this.author.length && this.newMessage.length != ''){
           
-          let MessageObject = {
-            authorName: this.author,
-            authorMessage: this.newMessage
-          }
-          console.log(MessageObject)
-          this.socket.emit('sendMessage', MessageObject);
+      //     let MessageObject = {
+      //       authorName: this.author,
+      //       authorMessage: this.newMessage
+      //     }
+      //     console.log(MessageObject)
+      //     this.socket.emit('sendMessage', MessageObject);
 
-          // this.$http.post(this.url + '/create/chat', body).then(response => {
-          //   console.log(response)
-          // })
-        }
+      //     // this.$http.post(this.url + '/create/chat', body).then(response => {
+      //     //   console.log(response)
+      //     // })
+      //   }
 
-      }
+      // }
     }
 }
 </script>

@@ -40,8 +40,6 @@
 
                     <strong>{{ userRequestData.placeName }}</strong>
                     <br>
-                    <strong>{{ userRequestData.adrres }}</strong>
-                    <br>
     
                     <div class="mt-3">
                         <strong>Descrição: </strong>
@@ -52,9 +50,10 @@
                         <span>Local para compra:</span>
                         <br>
                         <iframe src=""></iframe>
+                        <strong class="display-b mt-2">{{ userRequestData.adrres }}</strong>
                     </div>
 
-                    <vs-button to="/Chat" class="mt-4" color="primary" type="gradient">
+                    <vs-button to="/" class="mt-4" color="primary" type="gradient">
                         Iniciar Chat
                         <BIconChat/>
                     </vs-button>

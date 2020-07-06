@@ -60,6 +60,11 @@ Vue.use(VueRouter)
           name: 'ChatList',
           component: () => import('../views/private/ChatList.vue') 
         },
+        {
+          path: '/RequestList',
+          name: 'RequestList',
+          component: () => import('../views/private/RequestList.vue') 
+        },
 
       ]
     }
