@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1>This is an about page</h1>
-
     <b-card class="ac tutorial-card">
       <b-carousel
         id="carousel-fade"
@@ -32,6 +30,18 @@
           <vs-button to="/DashBoard" color="primary" type="filled">Entrar na diversão</vs-button>
         </b-carousel-slide>
       </b-carousel>
+      
+      <span class="display-b mt-3 cp" @click="skipToDashBoard">skip</span>
+    
     </b-card>
   </div>
 </template>
+<script>
+export default {
+  methods:{
+    skipToDashBoard(){
+      this.$router.push('/DashBoard')
+    }
+  }
+}
+</script>

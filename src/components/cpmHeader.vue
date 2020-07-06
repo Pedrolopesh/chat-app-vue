@@ -15,7 +15,7 @@
 
         <vs-button to="/DashBoard" type="line" class="mt-3 btn-sidebar" icon="home">Início</vs-button>
         <vs-button type="line" class="mt-3 btn-sidebar" icon="add">Criar Pedido</vs-button>
-        <vs-button to="/ChatList" type="line" class="mt-3 btn-sidebar" icon="chat">Conversas</vs-button>
+        <vs-button to="/ChatList" type="line" class="mt-3 btn-sidebar"> <BIconReceipt class="mr-1"/> Pedidos</vs-button>
         <vs-button to="/UserPreferences" type="line" class="mt-3 btn-sidebar"> <BIconGear class="mr-1"/> Configurações </vs-button>
         <vs-button to="/Home" type="line" class="mt-3 btn-sidebar" icon="logout">Sair</vs-button>
 
@@ -31,14 +31,15 @@
 
 <script>
 import modalData from './cpmModalData'
-import { BIconGear, BIconList } from 'bootstrap-vue'
+import { BIconGear, BIconList, BIconReceipt } from 'bootstrap-vue'
 
 export default {
   name: 'ComponentHeader',
   components:{
     modalData,
     BIconGear,
-    BIconList
+    BIconList,
+    BIconReceipt
   },
 
   methods:{

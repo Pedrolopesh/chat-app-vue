@@ -80,3 +80,46 @@
 .cp{
     cursor: pointer;
 }
+
+.icon-login{
+    display: block;
+    max-width: 70%;
+    width: 100%;
+    
+    @media screen and (max-width: 700px){
+        max-width: 90%;
+        width: 100%;
+    }
+}
+
+.icon-home{
+    display: block;
+    max-width: 30%;
+    width: 100%;
+    
+    @media screen and (max-width: 700px){
+        max-width: 90%;
+        width: 100%;
+    }
+}
+
+.blue-link{
+    color: #1a64d4 !important;
+    text-decoration: underline;
+    cursor: pointer;
+    
+    &:hover{
+        text-decoration: underline !important;
+    }
+}
+
+.container-buttons-home{
+    display: block;
+    max-width: 20%;
+    width: 100%;
+
+    @media screen and (max-width: 700px){
+        max-width: 90%;
+        width: 100%;
+    }
+}

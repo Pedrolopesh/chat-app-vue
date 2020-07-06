@@ -1,19 +1,23 @@
 <template>
     <div>
-        <h1>Signup</h1>
 
-        <b-container class="bv-example-row">
-            <b-row>
-                <b-col>1 of 3</b-col>
+        <b-container class="bv-example-row mt-9">
+            <b-row class="brake-small">
+                <b-col>
+                    <img src="../../../public/card-signup.png" class="ac img-login">
+                    <!-- <span class="ac" v-html="Svgs.helpDelivreyLogo"></span> -->
+                    <!-- <p>Um app para te ajudar no seu dia dia em casa</p> -->
+                </b-col>
 
 
                 <b-col>
-                    <b-card class="p5 card-style-1 mt-4">
+                    <b-card class="p5 card-style-1 mt-4 mb-7">
                         <h2>Cadastro</h2>
 
                         <div class="centerx">
                             <vs-input class="ac mt-4" type="text" placeholder="Email" v-model="userForm.name"/>
-                            <vs-input class="ac mt-4" type="text" placeholder="Email" v-model="userForm.email"/>
+                            <vs-input class="ac mt-4" type="text" placeholder="Email" v-model="userForm.name"/>
+                            <vs-input class="ac mt-4" type="number" placeholder="phone" v-model="userForm.phone"/>
                             <vs-input class="ac mt-4" type="text" placeholder="password" v-model="userForm.password"/>
                         </div>
 
@@ -21,7 +25,7 @@
 
                         <span class="display-b mt-3">
                             já possui cadastro?
-                            <a @click="goToLogin()">faça o login</a>
+                            <a class="blue-link" @click="goToLogin()">faça o login</a>
                         </span>
                     </b-card>
                 </b-col>
@@ -31,11 +35,15 @@
 </template>
 
 <script>
+import Svgs from '../../assets/svgs/svgSet'
+
 export default {
     data:() => ({
+        Svgs:Svgs,
         userForm:{
             name:'',
             email:'',
+            phone:'',
             password:''
         }
     }),
