@@ -6,8 +6,9 @@
     </div>
 </template>
 <script>
-import componentHeader from '@/components/cpmHeader'
-import RequestTable from '@/components/cpmRequestTable'
+import componentHeader from '@/components/cpmHeader';
+import RequestTable from '@/components/cpmRequestTable';
+
 export default {
     data:() => ({
         test:''

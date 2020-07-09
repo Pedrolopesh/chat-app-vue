@@ -17,7 +17,7 @@
                         <vs-input class="ac mt-4" type="text" placeholder="Email" v-model="email"/>
                         <vs-input class="ac mt-4" type="password" placeholder="Senha" v-model="password"/>
 
-                        <vs-button to="/DashBoard" class="mt-3" type="gradient">Entrar</vs-button>
+                        <vs-button @click="tryLogin" class="mt-3" type="gradient">Entrar</vs-button>
 
                         <span class="display-b mt-3">
                             ainda não possui cadastro?
@@ -36,6 +36,8 @@ export default {
     data:() => ({
         Svgs:Svgs,
 
+        url:process.env.VUE_APP_PROD_URL,
+
         email:'',
         password:'',
     }),
@@ -43,6 +45,29 @@ export default {
     methods: {
         goToSignup(){
             this.$router.push('/Signup')
+        },
+
+        tryLogin(){
+            let body ={
+                email:this.email,
+                password:this.password
+            }
+            this.$http.post(this.url + '/login', body).then(response => {
+                localStorage.setItem('token', response.data.token)
+                localStorage.setItem('id', response.data.user_id)
+
+                console.log(response)
+                if(response.data != '' && response.status == 200){
+                    this.$router.push('/DashBoard')
+                }else{
+                    alert("error")
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                alert("error")
+            })
+            // console.log(this.$http)
         }
     },
 }

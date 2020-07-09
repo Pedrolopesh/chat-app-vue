@@ -74,6 +74,9 @@ import {
 
 export default {
     data:() => ({
+
+        url:process.env.VUE_APP_PROD_URL,
+
         svgs:svgs,
         items:[
             {numRequest:'1', userName:'Pedro lopes', userPicture:'https://placekitten.com/300/300', placeName:'Mercado Limeira', adrres:'Rua Lauro Linhares', fee:'5,00', description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facilis fugit sunt ratione nemo voluptates ipsa minus quibusdam repudiandae suscipit!'},
@@ -89,6 +92,10 @@ export default {
         BIconTrash
     },
 
+    created() {
+        this.getAllRequests()
+    },
+
     computed: {
 
         ...mapGetters({
@@ -101,6 +108,12 @@ export default {
         ...mapActions({
             changeUserRequestData: 'changeUserRequestData'
         }),
+
+        getAllRequests(){
+            this.$http.get(this.url + '/list/request').then(response => {
+                console.log(response)
+            })
+        },
 
         OpenInfoModal(param){
             this.changeUserRequestData(param)
