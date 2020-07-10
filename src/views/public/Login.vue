@@ -38,8 +38,8 @@ export default {
 
         url:process.env.VUE_APP_PROD_URL,
 
-        email:'',
-        password:'',
+        email:'user1@gmail.com',
+        password:'123123',
     }),
 
     methods: {

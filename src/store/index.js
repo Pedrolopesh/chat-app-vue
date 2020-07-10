@@ -1,5 +1,6 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex)
 
@@ -7,10 +8,14 @@ export default new Vuex.Store({
   state: {
     userRequestData:'',
     chatSteper:1,
+    listRequest:'',
+    requestSelectedId:'',
   },
   getters:{
     userRequestData: state => state.userRequestData,
     chatSteper: state => state.chatSteper,
+    listRequest: state => state.listRequest,
+    requestSelectedId: state => state.requestSelectedId,
   },
   mutations: {
     setuserRequestData(state, newSate){
@@ -18,6 +23,12 @@ export default new Vuex.Store({
     },
     setchatSteper(state, newSate){
       state.chatSteper = newSate
+    },
+    setListRequest(state, newSate){
+      state.listRequest = newSate
+    },
+    setRequestSelectedId(state, newSate){
+      state.requestSelectedId = newSate
     }
   },
   actions: {
@@ -26,6 +37,19 @@ export default new Vuex.Store({
     },
     changeChatSteper(context, newData){
       context.commit('setchatSteper', newData)
+    },
+    changeListRequest(context){
+      axios.get(process.env.VUE_APP_PROD_URL + '/list/request').then(response => {
+        // console.log(response)
+        context.commit('setListRequest', response.data)
+      })
+    },
+    async changeRequestById(context, newData){
+      let id = newData
+      await axios.get(process.env.VUE_APP_PROD_URL + `/request/${id}`).then(response => {
+        console.log(response)
+        context.commit('setRequestSelectedId', response.data)
+      })
     }
   },
   modules: {

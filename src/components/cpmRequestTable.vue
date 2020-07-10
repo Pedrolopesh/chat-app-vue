@@ -1,25 +1,31 @@
 <template>
     <div>
+
+<!-- @click="OpenInfoModal(item)" -->
+        <!-- {{ listRequest }} -->
+
+
         <b-container class="bv-example-row">
         <b-row class="brake-small" cols="3">
-            <b-col v-for="(item, i) in items" :key='i'>
-                <b-card class="mt-3 alg-txt-c card-style-2" @click="OpenInfoModal(item)">
+            <b-col v-for="(item, i) in listRequest" :key='i'>
+                <b-card v-if="item" class="mt-3 alg-txt-c card-style-2" @click="OpenInfoModal(item)">
                     
                     <div class="display-f">
-                        <strong class="ac">Pedido {{ item.numRequest }} </strong>
+                        <strong class="ac">Pedido {{ i+1 }} </strong>
                         <BIconTrash class="clr-red display-b alg-txt-e"/>
                     </div>
                     <br>
 
                     <div class="display-b mt-2">
-                        <span class="mr-2">{{ item.userName }} </span>
-                        <b-avatar :src='item.userPicture'></b-avatar>
+                        <span class="mr-2">{{ item.user[0].name }} </span>
+                        <b-avatar :src='item.user[0].imageProfile'></b-avatar>
                     </div>
 
-                    <div class="alg-txt-s mt-3">
-                        <span class="mt-2 display-b">Nome do lugar: <strong>{{ item.placeName }}</strong> </span>
-                        <span class="mt-2 display-b">Endereço: <strong>{{ item.adrres }}</strong> </span>
-                        <span class="mt-2 display-b">taxa para entregar: <strong>R$ {{ item.fee }}</strong> </span>
+                    <div class="alg-txt-c mt-3">
+                        <span class="mt-2 display-b"><strong>{{ item.name }}</strong> </span>
+                        <span class="mt-2 display-b"><strong>{{ item.placeName }}</strong> </span>
+                        <span class="mt-2 display-b"><strong>{{ item.address }}</strong> </span>
+                        <span class="mt-2 display-b"><strong>R$ {{ item.fee }}</strong> </span>
                     </div>
 
                 </b-card>
@@ -29,16 +35,21 @@
 
         <b-modal ref="userRequest-modal" hide-footer title="Informações do pedido">
             <div class="d-block text-center">
+                    <!-- {{ requestSelectedId }} -->
+               <div v-if="userRequestData">
+                    <h5>pedido {{ userRequestData.name }}</h5>
 
-                <div>
-                    <h5>pedido {{ userRequestData.numRequest }}</h5>
-
-                    <div class="display-b mt-2">
-                        <span class="mr-2">{{ userRequestData.userName }} </span>
-                        <b-avatar :src='userRequestData.userPicture'></b-avatar>
+                    <div class="display-b mt-5">
+                        <span class="mr-2">{{ userRequestData.user[0].name }} </span>
+                        <b-avatar :src='userRequestData.user[0].imageProfile'></b-avatar>
                     </div>
 
-                    <strong>{{ userRequestData.placeName }}</strong>
+                    <div class="mt-4">
+                        <BIconCart/>
+                        <strong class="ml-2">{{ userRequestData.placeName }}</strong>
+                    </div>
+                    
+                    <!-- <strong>{{ requestSelectedId }}</strong> -->
                     <br>
     
                     <div class="mt-3">
@@ -48,10 +59,16 @@
 
                     <div class="mt-3">
                         <span>Local para compra:</span>
-                        <br>
-                        <iframe src=""></iframe>
+                        <!-- <iframe src=""></iframe> -->
+                        <Map/>
+                    <div>
+                        <BIconMap/>
+                        <strong class="ml-2">{{ userRequestData.address }}</strong>
+                    </div>
+
                         <strong class="display-b mt-2">{{ userRequestData.adrres }}</strong>
                     </div>
+                    
 
                     <vs-button @click="iniciateChat(userRequestData)" class="mt-4" color="primary" type="gradient">
                         Iniciar Chat
@@ -60,14 +77,17 @@
                 </div>
             </div>
 
+
         </b-modal>
 
 
     </div>
 </template>
 <script>
-import { BIconTrash, BIconChat } from 'bootstrap-vue'
-import svgs from '../assets/svgs/svgSet'
+import { BIconTrash, BIconChat, BIconCart } from 'bootstrap-vue'
+import svgs from '../assets/svgs/svgSet';
+import Map from '@/components/cpmMap'
+
 import {
   mapGetters, mapActions
 } from 'vuex';
@@ -89,34 +109,47 @@ export default {
     }),
 
     components:{
-        BIconTrash
+        BIconTrash,
+        BIconCart,
+        Map
     },
 
     created() {
         this.getAllRequests()
+        // this.changeListRequest()
     },
 
     computed: {
 
         ...mapGetters({
             userRequestData: 'userRequestData',
+            listRequest: 'listRequest',
+            requestSelectedId: 'requestSelectedId',
         }),
 
     },
 
     methods:{
         ...mapActions({
-            changeUserRequestData: 'changeUserRequestData'
+            // changeUserRequestData: 'changeUserRequestData',
+            changeListRequest: 'changeListRequest',
+            changeRequestById: 'changeRequestById',
         }),
 
         getAllRequests(){
-            this.$http.get(this.url + '/list/request').then(response => {
-                console.log(response)
-            })
+            // this.$http.get(this.url + '/list/request').then(response => {
+                // })
+            this.changeListRequest()
+        
         },
 
         OpenInfoModal(param){
-            this.changeUserRequestData(param)
+            // this.changeRequestById(param._id)
+            // this.changeUserRequestData(param)
+
+            this.$store.commit("setuserRequestData", param);
+
+            console.log(param)
             this.showModal()
         },
 

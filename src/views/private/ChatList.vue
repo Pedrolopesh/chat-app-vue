@@ -21,11 +21,18 @@
                 <ChatComponent/>
             </div>
 
+<div>
+        <Map/>
+</div>
+
+
     </div>
 </template>
 <script>
 import ChatComponent from '../../components/cpmLiveChat';
 import componentHeader from '@/components/cpmHeader';
+import Map from '@/components/cpmMap'
+
 import {
   mapGetters, mapActions
 } from 'vuex';
@@ -50,7 +57,8 @@ export default {
 
     components:{
         componentHeader,
-        ChatComponent
+        ChatComponent,
+        Map
     },
 
     methods:{
