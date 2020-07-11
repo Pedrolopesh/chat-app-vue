@@ -8,10 +8,10 @@
       <!-- {{ userRequestData.longitude }} -->
       <!-- {{ userRequestData.latitude }} -->
       <!-- {{ marker }} -->
-      {{ center }}
+      <!-- {{ center }}
       <button @click="setMarker">
           tyr
-      </button>
+      </button> -->
     </div>
     <l-map
       style="height: 80%; width: 100%"
@@ -85,7 +85,7 @@ export default {
     };
   },
   created() {
-    //   this.parseMarker()
+      this.setMarker()
   },
       computed: {
 
@@ -112,25 +112,14 @@ export default {
         let latitude =  this.userRequestData.latitude
         return L.latLng(latitude, longitude)
 
-    
-
     },
 
     setMarker(){
-        // var x = document.getElementById("demo");
-
-        // function getLocation() {
-        // if (navigator.geolocation) {
-        //     navigator.geolocation.getCurrentPosition(this.showPosition());
-        // } else { 
-        //     x.innerHTML = "Geolocation is not supported by this browser.";
-        // }
-        // }
-
         if('geolocation' in navigator){
 
-            navigator.geolocation.getCurrentPosition(function(position){
-                console.log(position)
+        navigator.geolocation.getCurrentPosition(function(position){
+
+            this.setLocation(position)
 
         }, function(error){
             console.log(error)
@@ -138,17 +127,19 @@ export default {
         }else{
             alert('ops, não foi possivel localizar sua possição')
         }
-        
-        
-
-        // function showPosition(position) {
-        // x.innerHTML = "Latitude: " + position.coords.latitude + 
-        // "<br>Longitude: " + position.coords.longitude;
-        // }
     },
 
-    showPosition(position){
-        console.log(position)
+    setLocation(position){
+        let longitude = position.coords.longitude
+        let latitude =  position.coords.latitude
+
+        this.marker = L.latLng(latitude, longitude)
+        this.center = L.latLng(latitude, longitude)
+
+        console.log(position.coords)
+        console.log(position.coords.latitude)
+        console.log(position.coords.longitude)
+        console.log("Passou para o marcador")
     }
 
     // dropMarker(position){
@@ -157,10 +148,10 @@ export default {
     // }
   },
 
-    // watch: {
-    //     bounds(){
-    //         console.log(this.bounds)
-    //     }
-    // },
+    watch: {
+        marker(){
+            this.$store.commit("setCoordinateSelectedRequest", this.marker);
+        }
+    },
 }
 </script>

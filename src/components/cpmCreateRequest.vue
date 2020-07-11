@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-button @click="stateModal = true">Open Modal</b-button>
-                        {{ createModalState }}
+                        <!-- {{ createModalState }} -->
 
         <vs-dialog width="550px" not-center v-model="stateModal">
         <template #header>
@@ -18,7 +18,7 @@
                         v-model="requestForm.name"
                         class="mt-4 ac display-b mw-w-40"
                         color="rgb(213, 14, 151)"
-                        icon-after="true"
+                        :icon-after="true"
                     >
                         <template #icon>
                             <i><BIconBox/></i>
@@ -33,7 +33,7 @@
                         :danger="false"
                         :success="false"
                         icon="shopping_cart"
-                        icon-after="true"
+                        :icon-after="true"
                     >
                         <template #icon>
                             <i><BIconBasket/></i>
@@ -48,7 +48,7 @@
                         :danger="false" 
                         :success="false"
                         icon="email" 
-                        icon-after="true"
+                        :icon-after="true"
                     >
                         <template #icon>
                             <i><BIconMap/></i>
@@ -70,8 +70,8 @@
                         color="rgb(213, 14, 151)"
                         :danger="false"
                         :success="false"
-                        icon="add"
-                        icon-after="true"
+                        type="number"
+                        :icon-after="true"
                     >
                         <template #icon>
                             <i> $ </i>
@@ -83,13 +83,13 @@
                         <setMapPoints/>
                     </div>
 
-
+                    <!-- {{ coordinateSelectedRequest }} -->
                     <vs-button
                         color="rgb(59,222,200)"
                         gradient
                         class="ac mt-5"
                         :active="active == 6"
-                        @click="active = 6"
+                        @click="createRequest"
                     >
                         ENVIAR
                     </vs-button>
@@ -142,10 +142,16 @@ export default {
     computed: {
         ...mapGetters({
             createModalState: 'createModalState',
+            coordinateSelectedRequest: 'coordinateSelectedRequest',
         })
     },
 
     methods: {
+
+        ...mapActions({
+            createNewRequestApp: 'createNewRequestApp',
+            changeListRequest: 'changeListRequest',
+        }),
         
         show () {
             this.$modal.show('create-request-modal');
@@ -156,19 +162,25 @@ export default {
         },
 
         createRequest(){
+            this.active = 6
             let loged_user = localStorage.getItem('id')
 
             let body = {
-                name: this.requestForm,
-                placeName: this.requestForm,
-                address: this.requestForm,
-                description: this.requestForm,
-                fee: this.requestForm,
-                latitude: this.requestForm,
-                longitude: this.requestForm,
-                status: this.requestForm,
+                name: this.requestForm.name,
+                placeName: this.requestForm.placeName,
+                address: this.requestForm.address,
+                description: this.requestForm.description,
+                fee: this.requestForm.fee,
+                latitude: this.coordinateSelectedRequest.lat,
+                longitude: this.coordinateSelectedRequest.lng,
+                status: 'new',
                 user: loged_user
             }
+            // console.log(body)
+            this.createNewRequestApp(body)
+            this.stateModal = false
+            this.changeListRequest()
+            // console.log(this.coordinateSelectedRequest.lng)
         }
     },
 

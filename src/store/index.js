@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import postActionsVuex from './modules/postActionsVuex'
 
 Vue.use(Vuex)
 
@@ -10,6 +11,7 @@ export default new Vuex.Store({
     chatSteper:1,
     listRequest:'',
     requestSelectedId:'',
+    coordinateSelectedRequest:'',
     createModalState: false,
   },
   getters:{
@@ -18,8 +20,12 @@ export default new Vuex.Store({
     listRequest: state => state.listRequest,
     requestSelectedId: state => state.requestSelectedId,
     createModalState: state => state.createModalState,
+    coordinateSelectedRequest: state => state.coordinateSelectedRequest,
   },
   mutations: {
+    setCoordinateSelectedRequest(state, newSate){
+      state.coordinateSelectedRequest = newSate
+    },
     setStateCreateRequestModal(state, newSate){
       state.createModalState = newSate
     },
@@ -55,8 +61,9 @@ export default new Vuex.Store({
         console.log(response)
         context.commit('setRequestSelectedId', response.data)
       })
-    }
+    },
   },
   modules: {
+    postActionsVuex
   }
 })
