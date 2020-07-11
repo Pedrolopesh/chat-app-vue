@@ -48,3 +48,35 @@
         font-size: 30px;
     }
 }
+
+.create-request-modal{
+    display: block;
+
+    .container-form-request{
+        display: block;
+        padding: 25px;
+    }
+
+    
+    .vm--modal{
+        min-height: 400px !important;
+        height: 600px !important;
+        top: 60px !important;
+    }
+}
+
+.mw-w-40{
+    max-width: 100%;
+    width: 40%;
+}
+
+.global-textarea{
+    max-width: 100%;
+    width: 70%;
+    border-radius: 15px;
+    background-color: #f4f7f8;
+    border: none;
+
+    font-size: 15px;
+    padding: 10px;
+}

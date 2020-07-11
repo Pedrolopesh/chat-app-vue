@@ -10,14 +10,19 @@ export default new Vuex.Store({
     chatSteper:1,
     listRequest:'',
     requestSelectedId:'',
+    createModalState: false,
   },
   getters:{
     userRequestData: state => state.userRequestData,
     chatSteper: state => state.chatSteper,
     listRequest: state => state.listRequest,
     requestSelectedId: state => state.requestSelectedId,
+    createModalState: state => state.createModalState,
   },
   mutations: {
+    setStateCreateRequestModal(state, newSate){
+      state.createModalState = newSate
+    },
     setuserRequestData(state, newSate){
       state.userRequestData = newSate
     },

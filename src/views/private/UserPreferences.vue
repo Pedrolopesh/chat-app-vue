@@ -10,7 +10,7 @@
                     </div>
                 </b-btn>
 
-                <b-btn to="/RequestList" variant="outline-primary" class="chat-item display-b ac mt-2">
+                <b-btn to="/Profile" variant="outline-primary" class="chat-item display-b ac mt-2">
                     <div class="display-f mt-2">
                         <BIconReceipt class="mr-2"/>
                         <span class="mr-a display-b">Pedidos</span>

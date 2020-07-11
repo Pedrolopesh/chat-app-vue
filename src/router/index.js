@@ -65,6 +65,11 @@ Vue.use(VueRouter)
           name: 'RequestList',
           component: () => import('../views/private/RequestList.vue') 
         },
+        {
+          path: '/Profile',
+          name: 'Profile',
+          component: () => import('../views/private/Profile.vue') 
+        },
 
       ]
     }

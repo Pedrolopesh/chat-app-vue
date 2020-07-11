@@ -5,6 +5,9 @@
 @import './chatStyle.scss';
 @import './_align.scss';
 
+button, input, textarea{
+    &:focus {outline:0 !important}
+}
 
 .bg-white{
     background-color: rgb(255, 255, 255) !important;

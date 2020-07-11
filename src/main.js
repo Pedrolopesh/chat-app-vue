@@ -6,6 +6,8 @@ import store from './store'
 import router from './router'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import Vuesax from 'vuesax'
+import vmodal from 'vue-js-modal'
+import VueSweetalert2 from 'vue-sweetalert2';
 
 import 'leaflet/dist/leaflet.css';
 import './assets/index.scss'
@@ -28,6 +30,8 @@ Icon.Default.mergeOptions({
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(VueSweetalert2)
+Vue.use(vmodal, { dynamicDefault: { draggable: true, resizable: true } })
 
 Vue.prototype.$http = axios
 Vue.prototype.$url = process.env.VUE_APP_PROD_URL
