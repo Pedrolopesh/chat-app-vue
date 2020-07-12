@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+
 import postActionsVuex from './modules/postActionsVuex'
+import getActionVuex from './modules/getActionVuex'
 
 Vue.use(Vuex)
 
@@ -13,6 +15,7 @@ export default new Vuex.Store({
     requestSelectedId:'',
     coordinateSelectedRequest:'',
     createModalState: false,
+    detailRequestModalState: false,
   },
   getters:{
     userRequestData: state => state.userRequestData,
@@ -21,8 +24,12 @@ export default new Vuex.Store({
     requestSelectedId: state => state.requestSelectedId,
     createModalState: state => state.createModalState,
     coordinateSelectedRequest: state => state.coordinateSelectedRequest,
+    detailRequestModalState: state => state.detailRequestModalState,
   },
   mutations: {
+    setStateDetailRequestModal(state, newSate){
+      state.detailRequestModalState = newSate
+    },
     setCoordinateSelectedRequest(state, newSate){
       state.coordinateSelectedRequest = newSate
     },
@@ -64,6 +71,7 @@ export default new Vuex.Store({
     },
   },
   modules: {
-    postActionsVuex
+    postActionsVuex,
+    getActionVuex
   }
 })

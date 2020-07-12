@@ -5,7 +5,7 @@
 @import './chatStyle.scss';
 @import './_align.scss';
 
-button, input, textarea{
+button, input, textarea, svg{
     &:focus {outline:0 !important}
 }
 
@@ -74,11 +74,16 @@ button, input, textarea{
     width: 100%;
 }
 
-.close-icon{
+.icon-size-30{
     font-size: 30px;
-    // width: 30px;
-    // height: 30px;
 }
+.icon-size-25{
+    font-size: 25px;
+}
+.icon-size-20{
+    font-size: 20px;
+}
+
 
 .cp{
     cursor: pointer;
@@ -125,4 +130,16 @@ button, input, textarea{
         max-width: 90%;
         width: 100%;
     }
+}
+
+.brake-container{
+    @media screen and (max-width: 800px){
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+}
+
+.min-width-button{
+    max-width: 100%;
+    width: 100%;
 }

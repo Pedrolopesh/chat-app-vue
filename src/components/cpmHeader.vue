@@ -13,11 +13,11 @@
       <div class="px-3 py-2">
         <p> um app ideal para o momento da crise pandemica </p>
 
-        <vs-button to="/DashBoard" type="line" class="mt-3 btn-sidebar" icon="home">Início</vs-button>
-        <vs-button type="line" class="mt-3 btn-sidebar" icon="add" @click="createRequest">Criar Pedido</vs-button>
-        <vs-button to="/ChatList" type="line" class="mt-3 btn-sidebar"> <BIconReceipt class="mr-1"/> Pedidos</vs-button>
-        <vs-button to="/UserPreferences" type="line" class="mt-3 btn-sidebar"> <BIconGear class="mr-1"/> Configurações </vs-button>
-        <vs-button to="/Home" type="line" class="mt-3 btn-sidebar" icon="logout">Sair</vs-button>
+        <vs-button gradient to="/DashBoard" type="line" class="mt-3 btn-sidebar" > <BIconHouse class="mr-1 icon-sidebar-style"/> Início</vs-button>
+        <vs-button gradient type="line" class="mt-3 btn-sidebar" @click="createRequest"> <BIconPlus class="mr-1 icon-sidebar-style"/> Criar Pedido</vs-button>
+        <vs-button gradient to="/RequestList" type="line" class="mt-3 btn-sidebar"> <BIconReceipt class="mr-1 icon-sidebar-style"/> Pedidos</vs-button>
+        <vs-button gradient to="/UserPreferences" type="line" class="mt-3 btn-sidebar"> <BIconGear class="mr-1 icon-sidebar-style"/> Configurações </vs-button>
+        <vs-button to="/Home" type="line" class="mt-9 btn-sidebar" danger> <BIconPower class="mr-1 icon-sidebar-style"/> Sair</vs-button>
 
         <!-- <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img> -->
       </div>
@@ -36,7 +36,7 @@
 <script>
 // import modalData from './cpmModalData'
 import CreateRequest from './cpmCreateRequest'
-import { BIconGear, BIconList, BIconReceipt } from 'bootstrap-vue'
+import { BIconGear, BIconList, BIconReceipt, BIconPlus, BIconHouse, BIconPower } from 'bootstrap-vue'
 
 export default {
   name: 'ComponentHeader',
@@ -44,7 +44,10 @@ export default {
     BIconGear,
     BIconList,
     BIconReceipt,
-    CreateRequest
+    CreateRequest,
+    BIconPlus,
+    BIconHouse,
+    BIconPower,
   },
 
   methods:{

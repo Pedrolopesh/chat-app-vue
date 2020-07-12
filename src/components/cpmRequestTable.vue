@@ -7,7 +7,7 @@
 
         <b-container class="bv-example-row">
         <b-row class="brake-small" cols="3">
-            <b-col v-for="(item, i) in listRequest" :key='i'>
+            <b-col class="brake-container" v-for="(item, i) in listRequest" :key='i'>
                 <b-card v-if="item" class="mt-3 alg-txt-c card-style-2" @click="OpenInfoModal(item)">
                     
                     <div class="display-f">
@@ -62,7 +62,7 @@
                         <!-- <iframe src=""></iframe> -->
                         <Map/>
                     <div>
-                        <BIconMap/>
+                        <BIconGeo/>
                         <strong class="ml-2">{{ userRequestData.address }}</strong>
                     </div>
 
@@ -70,9 +70,9 @@
                     </div>
                     
 
-                    <vs-button @click="iniciateChat(userRequestData)" class="mt-4" color="primary" type="gradient">
+                    <vs-button @click="iniciateChat(userRequestData)" class="mt-4 ac" color="rgb(59,222,200)" type="gradient">
                         Iniciar Chat
-                        <BIconChat/>
+                        <BIconChat class="ml-2 icon-size-20"/>
                     </vs-button>
                 </div>
             </div>

@@ -4,7 +4,22 @@
     </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
+    data:() => ({
+
+    }),
+
+    created(){
+        this.changeUserData()
+    },
     
+    methods: {
+        ...mapActions({
+            changeUserData: 'changeUserData'
+        })
+    },
+
 }
 </script>

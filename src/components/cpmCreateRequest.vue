@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-button @click="stateModal = true">Open Modal</b-button>
+        <!-- <b-button @click="stateModal = true">Open Modal</b-button> -->
                         <!-- {{ createModalState }} -->
 
         <vs-dialog width="550px" not-center v-model="stateModal">
@@ -32,7 +32,6 @@
                         color="rgb(213, 14, 151)"
                         :danger="false"
                         :success="false"
-                        icon="shopping_cart"
                         :icon-after="true"
                     >
                         <template #icon>
@@ -47,11 +46,10 @@
                         color="rgb(213, 14, 151)" 
                         :danger="false" 
                         :success="false"
-                        icon="email" 
                         :icon-after="true"
                     >
                         <template #icon>
-                            <i><BIconMap/></i>
+                            <i><BIconGeo/></i>
                         </template>
                     </vs-input>
 
@@ -79,7 +77,8 @@
                     </vs-input>
 
 
-                    <div>
+                    <div class="mt-5">
+                        <small>*Aponte no mapa a região que estão localizada o local para a compra.</small>
                         <setMapPoints/>
                     </div>
 
@@ -111,13 +110,13 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { BIconBox, BIconMap, BIconBasket } from 'bootstrap-vue';
+import { BIconBox, BIconGeo, BIconBasket } from 'bootstrap-vue';
 import setMapPoints from './cpmSetMapPoints'
 
 export default {
     components:{
         BIconBox,
-        BIconMap,
+        BIconGeo,
         BIconBasket,
         setMapPoints
     },

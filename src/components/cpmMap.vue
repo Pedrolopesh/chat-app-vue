@@ -29,6 +29,7 @@ import {
 
 
 export default {
+  name:'ComponentMap',
   components: {
     LMap,
     LTileLayer,
@@ -38,7 +39,7 @@ export default {
     return {
     //   url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       url: 'https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=49778a018458470496d038cb8e74e5d8',
-      zoom: 13,
+      zoom: 16,
       attribution:'&copy; <a href=http://osm.org/copyright>OpenStreetMap</a>contributors',
       center: L.latLng(47.413220, -1.219482),
       bounds: null,
