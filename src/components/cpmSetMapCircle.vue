@@ -134,8 +134,8 @@ export default {
         navigator.geolocation.getCurrentPosition(function(position){
 
             // this.setLocation(position)
-            this.latitudePointer = position.coords.latitude
-            this.longitudePointer = position.coords.longitude
+            this.currentCordinations = position.coords
+            // this.longitudePointer = position.coords.longitude
             console.log("Localização atual")
 
         }, function(error){
@@ -148,14 +148,15 @@ export default {
     },
 
     setLocation(){
-        let longitude = this.longitudePointer
-        let latitude =  this.latitudePointer
+        console.log(this.currentCordinations)
+        // let longitude = this.longitudePointer
+        // let latitude =  this.latitudePointer
+        // console.log(latitude)
 
-        this.marker = L.latLng(longitude, latitude)
-        this.center = L.latLng(longitude, latitude)
-        this.circle.center = L.latLng(longitude, latitude)
+        // this.marker = L.latLng(longitude, latitude)
+        // this.center = L.latLng(longitude, latitude)
+        // this.circle.center = L.latLng(longitude, latitude)
 
-        // console.log(position.coords)
         // console.log(position.coords.latitude)
         // console.log(position.coords.longitude)
     }
