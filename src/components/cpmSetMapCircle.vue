@@ -151,9 +151,9 @@ export default {
         let longitude = this.longitudePointer
         let latitude =  this.latitudePointer
 
-        this.marker = L.latLng(latitude, longitude)
-        this.center = L.latLng(latitude, longitude)
-        this.circle.center = L.latLng(latitude, longitude)
+        this.marker = L.latLng(longitude, latitude)
+        this.center = L.latLng(longitude, latitude)
+        this.circle.center = L.latLng(longitude, latitude)
 
         // console.log(position.coords)
         // console.log(position.coords.latitude)
