@@ -12,6 +12,9 @@
       <button @click="setMarker">
           tyr
       </button> -->
+
+    {{ latitudePointer }}
+    {{ longitudePointer }}
     </div>
     <l-map
       style="height: 80%; width: 100%"
@@ -131,7 +134,8 @@ export default {
         navigator.geolocation.getCurrentPosition(function(position){
 
             // this.setLocation(position)
-            console.log(position.coords)
+            this.latitudePointer = position.coords.latitude
+            this.longitudePointer = position.coords.longitude
             console.log("Localização atual")
 
         }, function(error){
@@ -140,15 +144,16 @@ export default {
         }else{
             alert('ops, não foi possivel localizar sua possição')
         }
+        this.setLocation()
     },
 
-    setLocation(position){
-        console.log(position)
-        // let longitude = position.coords.longitude
-        // let latitude =  position.coords.latitude
+    setLocation(){
+        let longitude = this.longitudePointer
+        let latitude =  this.latitudePointer
 
-        // this.marker = L.latLng(latitude, longitude)
-        // this.center = L.latLng(latitude, longitude)
+        this.marker = L.latLng(latitude, longitude)
+        this.center = L.latLng(latitude, longitude)
+        this.circle.center = L.latLng(latitude, longitude)
 
         // console.log(position.coords)
         // console.log(position.coords.latitude)
