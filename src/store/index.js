@@ -16,6 +16,7 @@ export default new Vuex.Store({
     coordinateSelectedRequest:'',
     createModalState: false,
     detailRequestModalState: false,
+    chatData:''
   },
   getters:{
     userRequestData: state => state.userRequestData,
@@ -25,8 +26,12 @@ export default new Vuex.Store({
     createModalState: state => state.createModalState,
     coordinateSelectedRequest: state => state.coordinateSelectedRequest,
     detailRequestModalState: state => state.detailRequestModalState,
+    chatData: state => state.chatData,
   },
   mutations: {
+    setChatData(state, newSate){
+      state.chatData = newSate
+    },
     setStateDetailRequestModal(state, newSate){
       state.detailRequestModalState = newSate
     },

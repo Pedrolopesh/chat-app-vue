@@ -1,9 +1,11 @@
 <template>
     <div>
         <componentHeader/>
-        <h3>Chats</h3>
 
-            {{ chatSteper }}
+            <ChatComponent/>
+
+
+            <!-- {{ chatSteper }}
             <div v-if="chatSteper == 1">
 
             <div class="container-list-chats ac" v-for="(item, i) in items" :key='i'>
@@ -19,12 +21,7 @@
 
             <div v-else>
                 <ChatComponent/>
-            </div>
-
-<div>
-        <Map/>
-</div>
-
+            </div> -->
 
     </div>
 </template>

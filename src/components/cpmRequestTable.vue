@@ -170,6 +170,18 @@ export default {
             if(id == param.user[0]._id){
                 console.log("IDs são iguais")
                 this.alertModal = true
+            }else{
+
+                let objChat = {
+                    requet_id: param._id,
+                    user_response: param.user[0]._id,
+                    user_origin: id,
+                }
+
+                this.$store.commit("setChatData", objChat);
+                this.$router.push('/ChatList')
+
+
             }
         },
 

@@ -25,12 +25,28 @@
             </div>
 
             <div class="mt-5">
-                <h5>Raio para atendimento do seu pedido</h5>
+                <h5 class="alg-txt-c">Raio para atendimento do seu pedido</h5>
                 <div class="mw-w-25 ac">
                     <Map/>
                 </div>
             </div>
         </div>
+
+        
+                        <vs-button
+                            gradient
+                            style="min-width: 60px"
+                            danger
+                            @click="logout"
+                            class="ac mt-7 display-b"
+                            size="large"
+                            animation-type="scale"
+                        >
+                            <BIconPower class="icon-size-20"/>
+                            <template #animate >
+                                Sair
+                            </template>
+                        </vs-button>
 
 
     </div>
@@ -39,13 +55,14 @@
 import componentHeader from  '../../components/cpmHeader'
 import Map from  '../../components/cpmSetMapCircle'
 import { mapGetters, mapActions } from 'vuex';
-import { BIconPencil } from 'bootstrap-vue'
+import { BIconPencil, BIconPower } from 'bootstrap-vue'
 
 
 export default {
     components:{
         componentHeader,
         BIconPencil,
+        BIconPower,
         Map
     },
 
@@ -55,6 +72,14 @@ export default {
             userData: 'userData',
         }),
 
+    },
+
+    methods: {
+        logout(){
+            localStorage.removeItem('id');
+            localStorage.removeItem('token');
+            this.$router.push('/Home')
+        }
     },
 }
 </script>

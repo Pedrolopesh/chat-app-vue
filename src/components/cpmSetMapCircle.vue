@@ -1,6 +1,45 @@
 <template>
 
   <div style="height: 350px;">
+            <div class="display-f">
+
+            <vs-button
+                gradient
+                warn
+                :active="active == 1"
+                @click="set100m"
+            >
+                100m
+            </vs-button>
+
+            <vs-button
+                gradient
+                warn
+                :active="active == 2"
+                @click="set300m"
+            >
+                300m
+        </vs-button>
+
+            <vs-button
+                gradient
+                warn
+                :active="active == 3"
+                @click="set500m"
+            >
+                500m
+        </vs-button>
+
+            <vs-button
+                gradient
+                warn
+                :active="active == 4"
+                @click="set700m"
+            >
+                700m
+        </vs-button>
+
+      </div>
     <div class="info" style="height: 10%">
       <!-- <span>Center: {{ center }}</span> -->
       <!-- <span>Zoom: {{ zoom }}</span> -->
@@ -13,14 +52,13 @@
           tyr
       </button> -->
 
-    {{ latitudePointer }}
-    {{ longitudePointer }}
+    <!-- {{ latitudePointer }} -->
+    <!-- {{ longitudePointer }} -->
     </div>
     <l-map
       style="height: 80%; width: 100%"
       :zoom="zoom"
       :center="center"
-      @update:center="centerUpdated"
     >
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <l-marker :lat-lng="marker"></l-marker>
@@ -31,38 +69,6 @@
         />
     </l-map>
 
-<!-- <div class="display-f">
-
-                    <vs-input
-                        label-placeholder="latidute"
-                        v-model="latitudePointer"
-                        class="mt-4 ac display-b mw-w-40"
-                        color="rgb(213, 14, 151)"
-                        :danger="false"
-                        :success="false"
-                        icon="add"
-                        icon-after="true"
-                    >
-                        <template #icon>
-                            <i> Lat </i>
-                        </template>
-                    </vs-input>
-
-                    <vs-input
-                        label-placeholder="longitude"
-                        v-model="longitudePointer"
-                        class="mt-4 ac display-b mw-w-40"
-                        color="rgb(213, 14, 151)"
-                        :danger="false"
-                        :success="false"
-                        icon="add"
-                        icon-after="true"
-                    >
-                        <template #icon>
-                            <i> Log </i>
-                        </template>
-                    </vs-input>
-</div> -->
   </div>
 </template>
 
@@ -84,7 +90,7 @@ export default {
     return {
     //   url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       url: 'https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=49778a018458470496d038cb8e74e5d8',
-      zoom: 13,
+      zoom: 15,
       attribution:'&copy; <a href=http://osm.org/copyright>OpenStreetMap</a>contributors',
       center: L.latLng(47.413220, -1.219482),
       bounds: null,
@@ -96,6 +102,7 @@ export default {
         radius: 100,
         color: 'yellow'
       },
+      active:''
     };
   },
   created() {
@@ -133,9 +140,8 @@ export default {
 
         navigator.geolocation.getCurrentPosition(function(position){
 
-            // this.setLocation(position)
-            this.currentCordinations = position.coords
-            // this.longitudePointer = position.coords.longitude
+            console.log(position.coords.latitude)
+            console.log(position.coords.longitude)
             console.log("Localização atual")
 
         }, function(error){
@@ -144,7 +150,6 @@ export default {
         }else{
             alert('ops, não foi possivel localizar sua possição')
         }
-        this.setLocation()
     },
 
     setLocation(){
@@ -159,12 +164,30 @@ export default {
 
         // console.log(position.coords.latitude)
         // console.log(position.coords.longitude)
-    }
+    },
 
-    // dropMarker(position){
-    //     let marker = new H.map.Marker({ lat: position.Latitude, lng: position.Longitude });
-    //     console.log(marker)
-    // }
+    set100m(){
+        this.active = 1
+        this.zoom = 20
+    },
+
+    set300m(){
+        this.active = 2
+        this.zoom = 17
+
+    },
+    
+    set500m(){
+        this.active = 3
+        this.zoom = 15
+
+    },
+
+    set700m(){
+        this.active = 4
+        this.zoom = 13
+
+    }
   },
 
     watch: {
