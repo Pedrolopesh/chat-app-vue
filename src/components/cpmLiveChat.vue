@@ -40,7 +40,11 @@
 
 
         <div class="p15 display-b">
-          <p>dada</p>
+          <div v-for="(item, i) in originUserMessage" :key="i" class="alg-txt-s">
+
+            <span><strong>{{ item.user_origin }}</strong></span>: <span>{{ item.message }}</span>
+
+          </div>
         </div>
 
 
@@ -50,6 +54,10 @@
               <BIconCursor @click="createMessage()" class="mt-2 ml-2 cp send-message-icon"/>
           </div>
         </div>
+
+        <button @click="listenMessages">
+          messagem ?
+        </button>
 
         <!-- MENSAGEM -->
 
@@ -76,7 +84,7 @@ export default {
           {sendedName:'Fernanda', SendedMessage:'olá pedro, esse vai ser o nosso chat', sendedTimestamp:'08:00'},
         ],
 
-        originUserMessage: ''
+        originUserMessage: []
     }),
 
       computed: {
@@ -88,10 +96,6 @@ export default {
     },
 
     created(){
-
-        this.socket.on('receivedMessage', (message) => {
-          console.log(message)
-        })
 
       // MENSAGEM ENVIADA
       // let ref = fb.collection('messages').orderBy('timestamp')
@@ -130,39 +134,31 @@ export default {
         closeChat(){
           this.changeChatSteper(1)
         },
-      // createMessage(){
-      //   if(this.newMessage){
-      //     fb.collection('messages').add({
-      //       message: this.newMessage,
-      //       name: this.name,
-      //       timestamp: Date.now()
-      //     }).catch(err => {
-      //       console.log(err)
-      //     })
-      //     this.newMessage = '';
 
-      //   }else{
-      //     alert("type some message first")
-      //   }
-      // }
+      listenMessages(){
+        this.socket.on('receivedMessage', (message) => {
+          console.log(message)
+        })
+      },
 
       createMessage(){
         
         // console.log(this.chatData)
-          this.rendermessage()
-        // if(this.author.length && this.newMessage.length != ''){
+        
+        if(this.author.length && this.newMessage.length != ''){
           
-        //   let MessageObject = {
-        //     authorName: this.author,
-        //     authorMessage: this.newMessage
-        //   }
-        //   console.log(MessageObject)
-        //   this.socket.emit('sendMessage', MessageObject);
+          let MessageObject = {
+            authorName: this.author,
+            authorMessage: this.newMessage
+          }
 
-        //   // this.$http.post(this.url + '/create/chat', body).then(response => {
-        //   //   console.log(response)
-        //   // })
-        // }
+          this.socket.emit('sendMessage', MessageObject);
+          this.rendermessage()
+
+          // this.$http.post(this.url + '/create/chat', body).then(response => {
+          //   console.log(response)
+          // })
+        }
 
       },
       rendermessage(){
@@ -172,9 +168,18 @@ export default {
             timeStamp: new Date()
           }
 
-          this.originUserMessage = objMessage
-          console.log(objMessage)
+          
+          this.originUserMessage.push(objMessage)
+          // console.log(objMessage)
       }
-    }
+    },
+
+    // watch: {
+    //   socket(){
+    //     this.socket.on('receivedMessage', (message) => {
+    //       console.log(message)
+    //     })
+    //   }
+    // },
 }
 </script>
