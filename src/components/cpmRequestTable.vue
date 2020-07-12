@@ -76,10 +76,14 @@
                     </vs-button>
                 </div>
             </div>
-
-
         </b-modal>
 
+        <vs-dialog blur v-model="alertModal">
+        
+            <h1>alerta</h1>
+            <p>Este pedido foi criado por você</p>
+
+        </vs-dialog>
 
     </div>
 </template>
@@ -87,13 +91,12 @@
 import { BIconTrash, BIconChat, BIconCart } from 'bootstrap-vue'
 import svgs from '../assets/svgs/svgSet';
 import Map from '@/components/cpmMap'
-
-import {
-  mapGetters, mapActions
-} from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     data:() => ({
+
+        alertModal: false,
 
         url:process.env.VUE_APP_PROD_URL,
 
@@ -111,7 +114,7 @@ export default {
     components:{
         BIconTrash,
         BIconCart,
-        Map
+        Map,
     },
 
     created() {
@@ -154,7 +157,20 @@ export default {
         },
 
         iniciateChat(param){
-            console.log(param)
+            console.log("ID DO PEDIDO")
+            console.log(param._id)
+            
+            console.log("ID DO USUÀRIO QUE CRIOU O PEDIDO")
+            console.log(param.user[0]._id)
+
+            let id = localStorage.getItem('id')
+            console.log("ID DO USUÀRIO QUE ESTÀ LOGADO")
+            console.log(id)
+
+            if(id == param.user[0]._id){
+                console.log("IDs são iguais")
+                this.alertModal = true
+            }
         },
 
         showModal() {
