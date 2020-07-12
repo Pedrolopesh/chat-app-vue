@@ -3,27 +3,50 @@
         <componentHeader/>
         <h3>Preferências de usuário</h3>
             <div class="container-list-chats mt-7 ac">
-                <b-btn variant="outline-primary" class="chat-item display-b ac mt-2">
+                <!-- <b-btn variant="outline-primary" class="chat-item display-b ac mt-2">
                     <div class="display-f mt-2">
                         <BIconPerson class="mr-2"/>
                         <span class="mr-a display-b">Seu Perfil</span>
                     </div>
-                </b-btn>
+                </b-btn> -->
 
-                <b-btn to="/Profile" variant="outline-primary" class="chat-item display-b ac mt-2">
-                    <div class="display-f mt-2">
+                    <vs-button
+                        gradient
+                        color="rgb(59,222,200)"
+                        class="mw-w-100 mt-3"
+                        size="large"
+                        to="/Profile"
+                        :active="active == 1"
+                        @click="active = 1"
+                    >
+                        Seu Perfil
+                        <b-avatar class="ml-2" :src='userData.imageProfile'></b-avatar>
+                    </vs-button>
+
+                    <vs-button
+                        gradient
+                        color="rgb(59,222,200)"
+                        class="mw-w-100 mt-3"
+                        size="xl"
+                        to="/RequestList"
+                        :active="active == 1"
+                        @click="active = 1"
+                    >
                         <BIconReceipt class="mr-2"/>
-                        <span class="mr-a display-b">Pedidos</span>
-                    </div>
-                </b-btn>
-
-                <b-btn variant="outline-primary" class="chat-item display-b ac mt-2">
-                    <div class="display-f mt-2">
-                        <!-- <BIconReceipt class="mr-2"/> -->
-                        <span class="mr-2 ml-1"> ? </span>
-                        <span class="mr-a display-b">Perguntas frequentes</span>
-                    </div>
-                </b-btn>
+                        Pedidos
+                    </vs-button>
+      
+                    <vs-button
+                        gradient
+                        color="rgb(59,222,200)"
+                        class="mw-w-100 mt-3"
+                        size="xl"
+                        :active="active == 1"
+                        @click="active = 1"
+                    >
+                        ?
+                        Perguntas frequentes
+                    </vs-button>
                 
             </div>
     </div>
@@ -32,6 +55,7 @@
 import svgs from '../../assets/svgs/svgSet';
 import componentHeader from '@/components/cpmHeader';
 import { BIconPerson, BIconReceipt } from 'bootstrap-vue'
+import { mapGetters, mapActions } from 'vuex';
 
 
 export default {
@@ -43,6 +67,14 @@ export default {
                 {prefName:'Sair', svgstitle:''},
         ]
     }),
+
+        computed: {
+
+        ...mapGetters({
+            userData: 'userData',
+        })
+
+    },
 
     components:{
         componentHeader

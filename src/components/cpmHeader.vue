@@ -4,7 +4,7 @@
       <b-row class="ac header-container">
         <b-col class="p0"> <span class="icon-header"> <BIconList v-b-toggle.sidebar-1/> </span></b-col>
         <b-col></b-col>
-        <b-col @click="goToSetings()"><b-avatar class="ml-a display-b cp" src='https://picsum.photos/500/500/?image=54'></b-avatar>
+        <b-col @click="goToSetings()"><b-avatar class="ml-a display-b cp" :src='userData.imageProfile'></b-avatar>
         </b-col>
       </b-row>
     </b-container>
@@ -36,11 +36,13 @@
 <script>
 // import modalData from './cpmModalData'
 import CreateRequest from './cpmCreateRequest'
+import { mapGetters, mapActions } from 'vuex';
 import { BIconGear, BIconList, BIconReceipt, BIconPlus, BIconHouse, BIconPower } from 'bootstrap-vue'
 
 export default {
   name: 'ComponentHeader',
   components:{
+
     BIconGear,
     BIconList,
     BIconReceipt,
@@ -48,11 +50,22 @@ export default {
     BIconPlus,
     BIconHouse,
     BIconPower,
+  
   },
+
+    computed: {
+
+      ...mapGetters({
+
+        userData: 'userData',
+
+      })
+
+    },
 
   methods:{
     goToSetings(){
-      this.$router.push('/UserPreferences')
+      this.$router.push('/Profile')
     },
 
     createRequest(){
