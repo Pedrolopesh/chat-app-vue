@@ -130,7 +130,8 @@ export default {
 
         navigator.geolocation.getCurrentPosition(function(position){
 
-            this.setLocation(position)
+            console.log(position)
+            this.setLocation(position)  
 
         }, function(error){
             console.log(error)
