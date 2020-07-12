@@ -128,10 +128,10 @@ export default {
     setMarker(){
         if('geolocation' in navigator){
 
-        navigator.geolocation.getCurrentPosition(function(position){
+        let currentLocation = navigator.geolocation.getCurrentPosition(function(position){
 
             console.log(position)
-            this.setLocation(position)  
+            return position
 
         }, function(error){
             console.log(error)
@@ -139,6 +139,7 @@ export default {
         }else{
             alert('ops, não foi possivel localizar sua possição')
         }
+        this.setLocation(currentLocation)  
     },
 
     setLocation(position){
