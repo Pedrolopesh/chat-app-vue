@@ -1,6 +1,6 @@
 <template>
     <div>
-            <vs-dialog width="550px" not-center v-model="stateDetailModal">
+            <!-- <vs-dialog width="550px" not-center v-model="stateDetailModal"> -->
                 <h1>teste</h1>
 
                 <h3>Pedido {{ userRequestData.name }}</h3>
@@ -40,7 +40,7 @@
                     <BIconChat class="ml-2 icon-size-20"/>
                 </vs-button>
 
-            </vs-dialog>
+            <!-- </vs-dialog> -->
 
     </div>
 </template>
@@ -75,36 +75,36 @@ export default {
         watch: {
 
         // CONTROL LOCAL VARIABLE MODAL STATE
-        stateDetailModal(){
+        // stateDetailModal(){
 
-            if(this.stateDetailModal == false){
+        //     if(this.stateDetailModal == false){
 
-                this.$store.commit("setStateDetailRequestModal", false);
+        //         this.$store.commit("setStateDetailRequestModal", false);
 
-            }
+        //     }
 
-            else if(this.stateDetailModal == true){
+        //     else if(this.stateDetailModal == true){
 
-                this.$store.commit("setStateDetailRequestModal", true);
+        //         this.$store.commit("setStateDetailRequestModal", true);
 
-            }
+        //     }
 
-        },
+        // },
 
         // CONTROL GLOBAL VARIABLE MODAL STATE
-        detailRequestModalState(){
+        // detailRequestModalState(){
 
-            if(this.detailRequestModalState == false){
+        //     if(this.detailRequestModalState == false){
 
-                this.stateDetailModal = false
+        //         this.stateDetailModal = false
 
-            }else {
+        //     }else {
 
-                this.stateDetailModal = true
+        //         this.stateDetailModal = true
 
-            }
+        //     }
 
-        },
+        // },
     },
 }
 </script>

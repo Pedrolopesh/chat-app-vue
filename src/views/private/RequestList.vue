@@ -37,7 +37,12 @@
             </div>
 
             <div>
-                <DetailModal/>
+                <vs-dialog width="550px" not-center v-model="stateDetailModal">
+                    <DetailModal/>
+
+                </vs-dialog>
+                {{ stateDetailModal}}
+
             </div>
 
         <!-- MODAL DE DETALHES  -->
@@ -59,7 +64,8 @@ export default {
             { _id:'2', requestName:'Mercado Linhares'},
         ],
 
-        url:process.env.VUE_APP_PROD_URL
+        url:process.env.VUE_APP_PROD_URL,
+        stateDetailModal: false,
     }),
 
     created() {
@@ -89,6 +95,7 @@ export default {
             console.log(param)
             this.$store.commit("setuserRequestData", param);
             this.$store.commit("setStateDetailRequestModal", true);
+            this.stateDetailModal = true;
         },
 
         backStep(){
