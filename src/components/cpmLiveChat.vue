@@ -98,14 +98,13 @@ export default {
     },
 
     created(){
-
+        let vm = this;
         this.socket.on('messageRecived', function(message) {
           console.log("AQUI")
-          // this.rendermessage(message)
+
           console.log(message)
-          this.originUserMessage.push(message)
-          // console.log(message)
-          // this.originUserMessage.push(param)
+          vm.originUserMessage.push(message)
+   
 
         })
 
@@ -171,12 +170,7 @@ export default {
     },
 
     watch: {
-        originUserMessage(){
-          this.socket.on('messageRecived', function(message){
-            // this.rendermessage(message)
-            this.originUserMessage.push(param)
-          })
-      }
+ 
     },
 }
 </script>
