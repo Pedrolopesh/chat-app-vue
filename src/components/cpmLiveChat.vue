@@ -38,6 +38,7 @@
 
         <!-- MENSAGEM -->
 
+          {{ originUserMessage }}
 
         <div class="p15 display-b">
           <div v-for="(item, i) in originUserMessage" :key="i" class="alg-txt-s">
@@ -55,7 +56,7 @@
           </div>
         </div>
 
-        <button @click="listenMessages">
+        <button @click="listenMessages()">
           messagem ?
         </button>
 
@@ -84,7 +85,8 @@ export default {
           {sendedName:'Fernanda', SendedMessage:'olá pedro, esse vai ser o nosso chat', sendedTimestamp:'08:00'},
         ],
 
-        originUserMessage: []
+        originUserMessage: [],
+        listenedMessage: ''
     }),
 
       computed: {
@@ -97,28 +99,16 @@ export default {
 
     created(){
 
-      // MENSAGEM ENVIADA
-      // let ref = fb.collection('messages').orderBy('timestamp')
-      // ref.onSnapshot(snapshot => {
-        
-      //   snapshot.docChanges().forEach(change => {
-          
-      //     if(change.type = 'added'){
-      //       let doc = change.doc;
+        this.socket.on('messageRecived', function(message) {
+          console.log("AQUI")
+          // this.rendermessage(message)
+          console.log(message)
+          this.originUserMessage.push(message)
+          // console.log(message)
+          // this.originUserMessage.push(param)
 
-      //       this.messagens.push({
-      //         id: doc.id,
-      //         name: doc.data().name,
-      //         message: doc.data().message,
-      //         timestamp: moment(doc.data().timestamp).format('LTS')
-      //       })
+        })
 
-      //     }
-
-      //   })
-
-      // })
-      // MENSAGEM ENVIADA
 
     },
 
@@ -136,9 +126,16 @@ export default {
         },
 
       listenMessages(){
-        this.socket.on('receivedMessage', (message) => {
+
+        let socket = this.socket
+        this.socket.on('messageRecived', function(message) {
+          console.log("AQUI")
+          // this.rendermessage(message)
           console.log(message)
+          this.originUserMessage.push(param)
+
         })
+
       },
 
       createMessage(){
@@ -148,38 +145,38 @@ export default {
         if(this.author.length && this.newMessage.length != ''){
           
           let MessageObject = {
-            authorName: this.author,
-            authorMessage: this.newMessage
+            user_origin: this.author,
+            message: this.newMessage
           }
 
           this.socket.emit('sendMessage', MessageObject);
-          this.rendermessage()
+          // this.rendermessage(MessageObject)
+          this.originUserMessage.push(MessageObject)
 
-          // this.$http.post(this.url + '/create/chat', body).then(response => {
-          //   console.log(response)
-          // })
         }
 
       },
-      rendermessage(){
-          let objMessage = {
-            user_origin: this.author,
-            message: this.newMessage,
-            timeStamp: new Date()
-          }
 
-          
-          this.originUserMessage.push(objMessage)
-          // console.log(objMessage)
+      rendermessage(param){
+        this.originUserMessage.push(param)
       }
+        
+        
+          // console.log(objMessage)
+            // let objMessage = {
+            //   user_origin: this.author,
+            //   message: this.newMessage,
+            //   timeStamp: new Date()
+            // }
     },
 
-    // watch: {
-    //   socket(){
-    //     this.socket.on('receivedMessage', (message) => {
-    //       console.log(message)
-    //     })
-    //   }
-    // },
+    watch: {
+        originUserMessage(){
+          this.socket.on('messageRecived', function(message){
+            // this.rendermessage(message)
+            this.originUserMessage.push(param)
+          })
+      }
+    },
 }
 </script>
