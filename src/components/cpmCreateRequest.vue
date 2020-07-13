@@ -3,7 +3,7 @@
         <!-- <b-button @click="stateModal = true">Open Modal</b-button> -->
                         <!-- {{ createModalState }} -->
 
-        <vs-dialog width="550px" not-center v-model="stateModal">
+        <vs-dialog width="550px" not-center blur v-model="stateModal">
         <template #header>
           <h4 class="not-margin">
             Registre seu pedido
