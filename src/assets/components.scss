@@ -142,3 +142,13 @@
     max-width: 100%;
     width: 100%;
 }
+
+.login-input{
+    max-width: 100%;
+    width: 40%;
+    box-sizing: border-box;
+    
+    @media screen and (max-width: 700px){
+        width: 70%;
+    }
+}

@@ -4,10 +4,14 @@
 <!-- @click="OpenInfoModal(item)" -->
         <!-- {{ listRequest }} -->
 
-
         <b-container class="bv-example-row">
-        <b-row class="brake-small" cols="3">
-            <b-col class="brake-container" v-for="(item, i) in listRequest" :key='i'>
+
+        <span class="mt-9 display-b" v-if="listRequestByStatus == '' ">
+            <h3>Não possuiem pedidos ainda 😪</h3>
+        </span>
+
+        <b-row class="brake-small" cols="3" v-else>
+            <b-col class="brake-container" v-for="(item, i) in listRequestByStatus" :key='i'>
                 <b-card v-if="item" class="mt-3 alg-txt-c card-style-2" @click="OpenInfoModal(item)">
                     
                     <div class="display-f">
@@ -33,70 +37,26 @@
         </b-row>
         </b-container>
 
-        <b-modal ref="userRequest-modal" hide-footer title="Informações do pedido">
-            <div class="d-block text-center">
-                    <!-- {{ requestSelectedId }} -->
-               <div v-if="userRequestData">
-                    <h5>pedido {{ userRequestData.name }}</h5>
-
-                    <div class="display-b mt-5">
-                        <span class="mr-2">{{ userRequestData.user[0].name }} </span>
-                        <b-avatar :src='userRequestData.user[0].imageProfile'></b-avatar>
-                    </div>
-
-                    <div class="mt-4">
-                        <BIconCart/>
-                        <strong class="ml-2">{{ userRequestData.placeName }}</strong>
-                    </div>
-                    
-                    <!-- <strong>{{ requestSelectedId }}</strong> -->
-                    <br>
-    
-                    <div class="mt-3">
-                        <strong>Descrição: </strong>
-                        <span class="alg-txt-j">{{ userRequestData.description }}</span>
-                    </div>
-
-                    <div class="mt-3">
-                        <span>Local para compra:</span>
-                        <!-- <iframe src=""></iframe> -->
-                        <Map/>
-                    <div>
-                        <BIconGeo/>
-                        <strong class="ml-2">{{ userRequestData.address }}</strong>
-                    </div>
-
-                        <strong class="display-b mt-2">{{ userRequestData.adrres }}</strong>
-                    </div>
-                    
-
-                    <vs-button @click="iniciateChat(userRequestData)" class="mt-4 ac" color="rgb(59,222,200)" type="gradient">
-                        Iniciar Chat
-                        <BIconChat class="ml-2 icon-size-20"/>
-                    </vs-button>
-                </div>
-            </div>
-        </b-modal>
-
-        <vs-dialog blur v-model="alertModal">
-        
-            <h1>alerta</h1>
-            <p>Este pedido foi criado por você</p>
-
+        <vs-dialog width="550px" not-center blur v-model="stateDetailModal">
+            <DetailModal/>
         </vs-dialog>
+
+
 
     </div>
 </template>
 <script>
 import { BIconTrash, BIconChat, BIconCart } from 'bootstrap-vue'
 import svgs from '../assets/svgs/svgSet';
-import Map from '@/components/cpmMap'
+import Map from '@/components/cpmMap';
+import DetailModal from '@/components/cpmDetailModal';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
     data:() => ({
 
         alertModal: false,
+        stateDetailModal: false,
 
         url:process.env.VUE_APP_PROD_URL,
 
@@ -114,6 +74,7 @@ export default {
     components:{
         BIconTrash,
         BIconCart,
+        DetailModal,
         Map,
     },
 
@@ -125,16 +86,19 @@ export default {
     computed: {
 
         ...mapGetters({
+
             userRequestData: 'userRequestData',
             listRequest: 'listRequest',
             requestSelectedId: 'requestSelectedId',
+            listRequestByStatus: 'listRequestByStatus',
+
         }),
 
     },
 
     methods:{
         ...mapActions({
-            // changeUserRequestData: 'changeUserRequestData',
+            changeListRequestByStatus: 'changeListRequestByStatus',
             changeListRequest: 'changeListRequest',
             changeRequestById: 'changeRequestById',
         }),
@@ -143,7 +107,8 @@ export default {
             // this.$http.get(this.url + '/list/request').then(response => {
                 // })
             this.changeListRequest()
-        
+            this.changeListRequestByStatus('new')
+
         },
 
         OpenInfoModal(param){
@@ -151,39 +116,11 @@ export default {
             // this.changeUserRequestData(param)
 
             this.$store.commit("setuserRequestData", param);
-
-            console.log(param)
-            this.showModal()
+            this.stateDetailModal = true
+            // console.log(param)
+            // this.showModal()
         },
 
-        iniciateChat(param){
-            console.log("ID DO PEDIDO")
-            console.log(param._id)
-            
-            console.log("ID DO USUÀRIO QUE CRIOU O PEDIDO")
-            console.log(param.user[0]._id)
-
-            let id = localStorage.getItem('id')
-            console.log("ID DO USUÀRIO QUE ESTÀ LOGADO")
-            console.log(id)
-
-            if(id == param.user[0]._id){
-                console.log("IDs são iguais")
-                this.alertModal = true
-            }else{
-
-                let objChat = {
-                    requet_id: param._id,
-                    user_response: param.user[0]._id,
-                    user_origin: id,
-                }
-
-                this.$store.commit("setChatData", objChat);
-                this.$router.push('/ChatList')
-
-
-            }
-        },
 
         showModal() {
             this.$refs['userRequest-modal'].show()

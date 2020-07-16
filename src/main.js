@@ -10,12 +10,12 @@ import vmodal from 'vue-js-modal'
 import VueSweetalert2 from 'vue-sweetalert2';
 
 import 'leaflet/dist/leaflet.css';
-import './assets/index.scss'
-import './registerServiceWorker'
+import './assets/index.scss';
+import './registerServiceWorker';
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'vuesax/dist/vuesax.css' //Vuesax styles
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'vuesax/dist/vuesax.css'; //Vuesax styles
 import 'material-icons/iconfont/material-icons.css';
 
 import { Icon } from 'leaflet';

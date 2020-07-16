@@ -36,6 +36,7 @@
 
 <script>
 import Svgs from '../../assets/svgs/svgSet'
+import sweetAlert from 'sweetalert2';
 
 export default {
     data:() => ({
@@ -63,10 +64,23 @@ export default {
                 password:this.userForm.password
             }
 
-            this.$http.post(process.env.VUE_APP_PROD_URL + '/signup', body).then(response => {
-                console.log(response)
+            this.$http.post(this.url + '/signup', body).then(response => {
+            
+                sweetAlert.fire({
+                    icon: 'sucess',
+                    title: 'Usuário criado com sucesso',
+                    showConfirmButton: true
+                })
+            this.$router.push('/About')
+
             }).catch(err => {
-                console.log(err)
+                
+                sweetAlert.fire({
+                    icon: 'error',
+                    title: 'ops! algo deu errado.',
+                    showConfirmButton: true
+                })
+            
             })
         }
     },

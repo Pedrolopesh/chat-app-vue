@@ -37,11 +37,10 @@
             </div>
 
             <div>
-                <vs-dialog width="550px" not-center v-model="stateDetailModal">
+                <vs-dialog width="550px" not-center blur v-model="stateDetailModal">
                     <DetailModal/>
-
                 </vs-dialog>
-                {{ stateDetailModal}}
+
 
             </div>
 
@@ -94,7 +93,7 @@ export default {
             // this.active = 0
             console.log(param)
             this.$store.commit("setuserRequestData", param);
-            this.$store.commit("setStateDetailRequestModal", true);
+            // this.$store.commit("setStateDetailRequestModal", true);
             this.stateDetailModal = true;
         },
 
