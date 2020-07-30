@@ -16,6 +16,7 @@
         <vs-button gradient to="/DashBoard" type="line" class="mt-3 btn-sidebar" > <BIconHouse class="mr-1 icon-sidebar-style"/> Início</vs-button>
         <vs-button gradient type="line" class="mt-3 btn-sidebar" @click="createRequest"> <BIconPlus class="mr-1 icon-sidebar-style"/> Criar Pedido</vs-button>
         <vs-button gradient to="/RequestList" type="line" class="mt-3 btn-sidebar"> <BIconReceipt class="mr-1 icon-sidebar-style"/> Pedidos</vs-button>
+        <vs-button gradient to="/ChatList" type="line" class="mt-3 btn-sidebar"> <BIconChatDotsFill class="mr-1 icon-sidebar-style"/> Conversas </vs-button>
         <vs-button gradient to="/UserPreferences" type="line" class="mt-3 btn-sidebar"> <BIconGear class="mr-1 icon-sidebar-style"/> Configurações </vs-button>
         <vs-button to="/Home" type="line" class="mt-9 btn-sidebar" danger> <BIconPower class="mr-1 icon-sidebar-style"/> Sair</vs-button>
 
@@ -37,7 +38,7 @@
 // import modalData from './cpmModalData'
 import CreateRequest from './cpmCreateRequest'
 import { mapGetters, mapActions } from 'vuex';
-import { BIconGear, BIconList, BIconReceipt, BIconPlus, BIconHouse, BIconPower } from 'bootstrap-vue'
+import { BIconGear, BIconList, BIconReceipt, BIconPlus, BIconHouse, BIconPower, BIconChatDotsFill } from 'bootstrap-vue'
 
 export default {
   name: 'ComponentHeader',
@@ -50,6 +51,7 @@ export default {
     BIconPlus,
     BIconHouse,
     BIconPower,
+    BIconChatDotsFill,
   
   },
 

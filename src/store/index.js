@@ -9,8 +9,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    selectedChatData:'',
+
     userRequestData:'',
-    chatSteper:1,
     requestSelectedId:'',
     coordinateSelectedRequest:'',
     createModalState: false,
@@ -18,8 +19,8 @@ export default new Vuex.Store({
     chatData:''
   },
   getters:{
+    selectedChatData: state => state.selectedChatData,
     userRequestData: state => state.userRequestData,
-    chatSteper: state => state.chatSteper,
     requestSelectedId: state => state.requestSelectedId,
     createModalState: state => state.createModalState,
     coordinateSelectedRequest: state => state.coordinateSelectedRequest,
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     chatData: state => state.chatData,
   },
   mutations: {
+    setSelectedChatData(state, newSate){
+      state.selectedChatData = newSate
+    },
     setChatData(state, newSate){
       state.chatData = newSate
     },
@@ -42,9 +46,6 @@ export default new Vuex.Store({
     setuserRequestData(state, newSate){
       state.userRequestData = newSate
     },
-    setchatSteper(state, newSate){
-      state.chatSteper = newSate
-    },
 
     setRequestSelectedId(state, newSate){
       state.requestSelectedId = newSate
@@ -54,9 +55,7 @@ export default new Vuex.Store({
     changeUserRequestData(context, newData){
       context.commit('setuserRequestData', newData)
     },
-    changeChatSteper(context, newData){
-      context.commit('setchatSteper', newData)
-    },
+
 
     async changeRequestById(context, newData){
       let id = newData

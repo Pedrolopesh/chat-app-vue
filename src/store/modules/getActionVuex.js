@@ -6,12 +6,14 @@ export default {
         userData:'',
         listRequest:'',
         listRequestByStatus:'',
+        listOpenChats:'',
     },
 
     getters: {
         userData: state => state.userData,
         listRequest: state => state.listRequest,
         listRequestByStatus: state => state.listRequestByStatus,
+        listOpenChats: state => state.listOpenChats,
     },
 
     mutations: {
@@ -23,6 +25,9 @@ export default {
         },
         setListRequestByStatus(state, newSate){
             state.listRequestByStatus = newSate
+        },
+        setOpenChats(state, newSate){
+            state.listOpenChats = newSate
         },
     },
 
@@ -52,6 +57,17 @@ export default {
                 context.commit('setListRequestByStatus', response.data)
             })
 
+        },
+
+        changeListOpenChats(context, newData){
+
+            let type = newData.type
+            let user_id = newData.user_id
+
+            axios.get(process.env.VUE_APP_PROD_URL + `/active/chats?type=${type}&id=${user_id}`).then(response => {
+                // console.log(response)
+                context.commit('setOpenChats', response.data)
+              })
         }
         
     }

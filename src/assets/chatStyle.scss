@@ -15,10 +15,14 @@
     }
 }
 
-
+.chat-container-modal{
+    display: block;
+    max-width: 100%;
+    width: 100%;
+}
 
 .chat-container{
-    max-width: 30%;
+    max-width: 100%;
     width: 100%;
     
     @media screen and (max-width: 700px){

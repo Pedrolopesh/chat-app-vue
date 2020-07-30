@@ -143,3 +143,11 @@ button, input, textarea, svg{
     max-width: 100%;
     width: 100%;
 }
+
+.modal-chat-container{
+    div{
+        display: block;
+        max-width: 100%;
+        width: 30% !important;
+    }
+}

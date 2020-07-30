@@ -2,33 +2,78 @@
     <div>
         <componentHeader/>
 
-            <ChatComponent/>
+            <!-- <ChatComponent/> -->
 
 
-            <!-- {{ chatSteper }}
-            <div v-if="chatSteper == 1">
+            <!-- {{ userData.chats }} -->
+            <!-- {{ userData.chats[1] }} -->
 
-            <div class="container-list-chats ac" v-for="(item, i) in items" :key='i'>
-                <b-btn @click="selectUser(item)" variant="outline-primary" class="chat-item display-b ac mt-2">
-                    <div class="display-b mt-2">
-                        <span class="mr-2">{{ item.userName }} </span>
-                        <b-avatar :src='item.userPicture'></b-avatar>
-                    </div>
-                </b-btn>
+            <!-- <button @click="consultUsers">teste</button> -->
+
+
+            <div @click="selectUser(item)" class="container-list-chats ac" v-for="(item, i) in items" :key='i'>
+
+
+                
+                <div v-for="(item, i) in item.user_response" :key="i">
+
+                        <vs-button
+                            class="display-b ac mt-2"
+                            
+                            gradient
+                            style="min-width: 60px"
+                            warn
+                            animation-type="scale"
+                        >
+
+                            <BIconEnvelope class="icon-size-20"/>
+                            <span class="ml-2">{{ item.name }} </span>
+                            <b-avatar class="ml-2" :src='item.imageProfile'></b-avatar>
+                            
+                            <template #animate >
+                                Send message 
+                            </template>
+
+                        </vs-button>
+                </div>
             </div>
 
-            </div>
 
-            <div v-else>
-                <ChatComponent/>
-            </div> -->
+            <vs-dialog blur scroll v-model="chatModal">
+
+
+                <template #header>
+                    <h3>
+                    Chat
+                    </h3>
+                </template>
+
+                <ChatModal/>
+
+            </vs-dialog>
+
+
+            <!-- <vs-dialog scroll overflow-hidden close v-model="chatModal" class="modal-chat-container"> -->
+            
+
+                <!-- <template #header>
+                    <h3>
+                    Chat
+                    </h3>
+                </template> -->
+
+            
+            <!-- </vs-dialog> -->
+
 
     </div>
 </template>
 <script>
 import ChatComponent from '../../components/cpmLiveChat';
 import componentHeader from '@/components/cpmHeader';
-import Map from '@/components/cpmMap'
+import ChatModal from '@/components/cpmChatmodal';
+import Map from '@/components/cpmMap';
+import { BIconEnvelope } from 'bootstrap-vue';
 
 import {
   mapGetters, mapActions
@@ -38,16 +83,23 @@ import {
 export default {
     data:() => ({
         step:1,
-        items:[
-            {userName:'Pedro Lopes', userPicture:'https://placekitten.com/300/300'},
-            {userName:'Fernanda', userPicture:'https://picsum.photos/500/500/?image=54'},
-        ]
+        // items:[
+        //     {userName:'Pedro Lopes', userPicture:'https://placekitten.com/300/300'},
+        //     {userName:'Fernanda', userPicture:'https://picsum.photos/500/500/?image=54'},
+        // ],
+
+        items:[],
+        chatModal: false,
+        url:process.env.VUE_APP_PROD_URL,
     }),
     
     computed: {
 
         ...mapGetters({
-            chatSteper: 'chatSteper',
+            
+            userData: 'userData',
+            selectedChatData: 'selectedChatData',
+
         }),
 
     },
@@ -55,18 +107,56 @@ export default {
     components:{
         componentHeader,
         ChatComponent,
+        BIconEnvelope,
+        ChatModal,
         Map
+    },
+
+    created(){
+        // this.checkItensData()
+        this.checkAciveChats()
+        // setTimeout( () => {this.consultUsers()}, 100);
     },
 
     methods:{
         ...mapActions({
-            changeChatSteper: 'changeChatSteper'
+            changeListOpenChats: 'changeListOpenChats',
         }),
 
+        checkItensData(){
+            if(this.items == ''){
+                this.consultUsers()
+            }
+        },
+
         selectUser(param){
-            console.log(param)
-            console.log(this.chatSteper)
-            this.changeChatSteper(2)
+            // console.log(param)
+            this.chatModal = true
+
+            this.$store.commit("setSelectedChatData", param.chats);
+            
+            // console.log(this.chatSteper) 
+            
+        },
+
+        checkAciveChats(){
+            
+            // console.log(this.userData.chats)
+
+            let teste = this.userData.chats
+
+            for(let i in teste){
+
+                let id = teste[i]._id
+                
+                this.$http.get(this.url + `/chat/messages/${id}`).then(response => {
+                    console.log("fajfjasjfsajsfajp")
+                    console.log(response.data)
+
+                    this.items.push(response.data)
+                })
+            
+            }
         }
     }
 }

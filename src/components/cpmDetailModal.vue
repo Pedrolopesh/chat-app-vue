@@ -42,6 +42,11 @@
             <h1>alerta</h1>
             <p>Este pedido foi criado por você</p>
         </vs-dialog>
+        
+        <vs-dialog blur v-model="errorModal">
+            <h1>alerta</h1>
+            <p>Você já possui uma conversa com esse usuário</p>
+        </vs-dialog>
 
 
 
@@ -50,7 +55,9 @@
 <script>
 import { mapGetters } from 'vuex';
 import { BIconCart3, BIconGeo, BIconChat } from 'bootstrap-vue';
-import DetailMap from './cpmMap'
+import DetailMap from './cpmMap';
+import sweetAlert from 'sweetalert2';
+
 
 export default {
 
@@ -62,7 +69,7 @@ export default {
     },
 
     data:() => ({
-        stateDetailModal: false,
+        errorModal: false,
         alertModal: false,
 
         url:process.env.VUE_APP_PROD_URL,
@@ -83,29 +90,27 @@ export default {
         // },
 
         iniciateChat(param){
-            console.log("ID DO PEDIDO")
-            console.log(param._id)
+            // console.log("ID DO PEDIDO")
+            // console.log(param._id)
             
-            console.log("ID DO USUÀRIO QUE CRIOU O PEDIDO")
-            console.log(param.user[0]._id)
+            // console.log("ID DO USUÀRIO QUE CRIOU O PEDIDO")
+            // console.log(param.user[0]._id)
+
+            // console.log("ID DO USUÀRIO QUE ESTÀ LOGADO")
+            // console.log(id)
 
             let id = localStorage.getItem('id')
-            console.log("ID DO USUÀRIO QUE ESTÀ LOGADO")
-            console.log(id)
-
             if(id == param.user[0]._id){
                 console.log("IDs são iguais")
                 this.alertModal = true
             }else{
 
                 let objChat = {
-                    requet_id: param._id,
                     user_response: param.user[0]._id,
                     user_origin: id,
                 }
 
                 let body = {
-                    request_id: param._id,
                     user_response: param.user[0]._id,
                     user_origin: id,
                     chatData:[{
@@ -116,21 +121,23 @@ export default {
 
             this.$http.post(this.url + '/create/chat', body).then(response => {
 
-                console.log(response)
-                localStorage.setItem('request_id', response.data.request_id)
-                localStorage.setItem('user_origin', response.data.user_origin)
-                localStorage.setItem('request_id', response.data.request_id)
-                localStorage.setItem('chatData', response.data.chatData)
-                localStorage.setItem('_id', response.data._id)
+                if(response.status == 400){
+                    this.errorModal = true
+                }else{
+                    
+                    console.log(response)
+                // localStorage.setItem('request_id', response.data.request_id)
+                // localStorage.setItem('user_origin', response.data.user_origin)
+                // localStorage.setItem('request_id', response.data.request_id)
+                // localStorage.setItem('chatData', response.data.chatData)
+                // localStorage.setItem('_id', response.data._id)
+
+                }
             
             })
             .catch(err => {
                 console.log(err)
-                sweetAlert.fire({
-                    icon: 'error',
-                    title: 'ops! algo deu errado.',
-                    showConfirmButton: true
-                })
+                this.errorModal = true
             })
 
                 // this.$store.commit("setChatData", objChat);

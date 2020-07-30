@@ -7,7 +7,7 @@
         <b-container class="bv-example-row">
 
         <span class="mt-9 display-b" v-if="listRequestByStatus == '' ">
-            <h3>Não possuiem pedidos ainda 😪</h3>
+            <h3>Não possuem pedidos registrados ainda 😪</h3>
         </span>
 
         <b-row class="brake-small" cols="3" v-else>
