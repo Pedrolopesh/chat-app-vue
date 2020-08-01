@@ -7,6 +7,8 @@ export default {
         listRequest:'',
         listRequestByStatus:'',
         listOpenChats:'',
+        requestById:'',
+        chatById:'',
     },
 
     getters: {
@@ -14,6 +16,8 @@ export default {
         listRequest: state => state.listRequest,
         listRequestByStatus: state => state.listRequestByStatus,
         listOpenChats: state => state.listOpenChats,
+        requestById: state => state.requestById,
+        chatById: state => state.chatById,
     },
 
     mutations: {
@@ -29,6 +33,12 @@ export default {
         setOpenChats(state, newSate){
             state.listOpenChats = newSate
         },
+        setRequestById(state, newSate){
+            state.requestById = newSate
+        },
+        setChatById(state, newSate){
+            state.chatById = newSate
+        },
     },
 
     actions: {
@@ -39,6 +49,28 @@ export default {
 
                 context.commit('setUserData', response.data)
             
+            })
+        },
+
+        async changeChatById(context, newData){
+            
+            let chat_id = newData
+            await axios.get(process.env.VUE_APP_PROD_URL + `/chat/messages/${chat_id}`).then(response => {
+
+                // context.commit('setChatById', response.data)
+
+                return response.data
+
+            })
+        },
+
+        async changeRequestById(context, newData){
+            
+            let request_id = newData
+            await axios.get(process.env.VUE_APP_PROD_URL + `/request/${request_id}`).then(response => {
+
+                context.commit('setRequestById', response.data)
+
             })
         },
 

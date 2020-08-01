@@ -38,7 +38,9 @@
 
             <div>
                 <vs-dialog width="550px" not-center blur v-model="stateDetailModal">
+                    
                     <DetailModal/>
+
                 </vs-dialog>
 
 
@@ -65,6 +67,8 @@ export default {
 
         url:process.env.VUE_APP_PROD_URL,
         stateDetailModal: false,
+
+        loadingData: false,
     }),
 
     created() {
@@ -74,7 +78,8 @@ export default {
 
     computed: {
         ...mapGetters({
-            userData: 'userData'
+            userData: 'userData',
+            requestById: 'requestById'
         })
     },
 
@@ -86,15 +91,18 @@ export default {
 
     methods:{
         ...mapActions({
-            changeUserData: 'changeUserData'
+            changeUserData: 'changeUserData',
+            changeRequestById: 'changeRequestById'
         }),
 
         selectRequest(param){
-            // this.active = 0
-            console.log(param)
+            
+            // this.changeRequestById(param._id)
+
             this.$store.commit("setuserRequestData", param);
-            // this.$store.commit("setStateDetailRequestModal", true);
-            this.stateDetailModal = true;
+
+            this.stateDetailModal = true
+
         },
 
         backStep(){

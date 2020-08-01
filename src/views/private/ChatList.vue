@@ -48,7 +48,7 @@
                     </h3>
                 </template>
 
-                <ChatModal/>
+                <ChatModal :chatId='selectedChatId'/>
 
             </vs-dialog>
 
@@ -87,6 +87,8 @@ export default {
         //     {userName:'Pedro Lopes', userPicture:'https://placekitten.com/300/300'},
         //     {userName:'Fernanda', userPicture:'https://picsum.photos/500/500/?image=54'},
         // ],
+
+        selectedChatId:'',
 
         items:[],
         chatModal: false,
@@ -130,12 +132,14 @@ export default {
         },
 
         selectUser(param){
-            // console.log(param)
-            this.chatModal = true
+            
+            console.log(param._id)
+            this.selectedChatId = param._id
 
-            this.$store.commit("setSelectedChatData", param.chats);
+            // this.$store.commit("setSelectedChatData", param);
             
             // console.log(this.chatSteper) 
+            this.chatModal = true
             
         },
 
