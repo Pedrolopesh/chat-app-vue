@@ -39,7 +39,7 @@
             <div>
                 <vs-dialog width="550px" not-center blur v-model="stateDetailModal">
                     
-                    <DetailModal/>
+                    <DetailModal @closeModal='closeModal'/>
 
                 </vs-dialog>
 
@@ -99,6 +99,8 @@ export default {
             
             // this.changeRequestById(param._id)
 
+            console.log(param)
+
             this.$store.commit("setuserRequestData", param);
 
             this.stateDetailModal = true
@@ -120,6 +122,13 @@ export default {
 
             })
 
+
+        },
+
+        closeModal(){
+
+            console.log('dsadsasadsadsa')
+            this.stateDetailModal = false
 
         }
     }

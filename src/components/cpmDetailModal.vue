@@ -33,24 +33,34 @@
                     <span>{{ userRequestData.address }}</span>
                 </div>
 
-                <vs-button v-if="requestPreferences != false" size="large" @click="iniciateChat(userRequestData)" class="mt-4 ac" color="rgb(59,222,200)" type="gradient">
-                    Iniciar Chat
-                    <BIconChat class="ml-2 icon-size-20"/>
-                </vs-button>
+                <div v-if="requestPreferences == false">
+
+                    <vs-button size="large" @click="iniciateChat(userRequestData)" class="mt-4 ac" color="rgb(59,222,200)" type="gradient">
+                        Iniciar Chat
+                        <BIconChat class="ml-2 icon-size-20"/>
+                    </vs-button>
                
+                </div>
 
                <div v-else>
 
-                <vs-button size="large" @click="attendRequestStatus(userRequestData)" class="mt-4 ac" color="rgb(59,222,200)" type="gradient">
+                <vs-button size="large" @click="attendRequestStatus(userRequestData)" class="mt-4 ac" color="rgb(59,222,200)" gradient>
                     Atendido
                     <BIconCheck2All class="ml-2 icon-size-20"/>
                 </vs-button>
 
-                <vs-button size="large" @click="cancelRequestStatus(userRequestData)" class="mt-4 ac" danger type="gradient">
+                <vs-button size="large" @click="cancelRequestStatus(userRequestData)" class="mt-4 ac" danger gradient>
                     Cancelar
                     <BIconX class="ml-2 icon-size-20"/>
                 </vs-button>
 
+               </div>
+
+               <div v-if="userRequestData.status == 'taked'">
+                    <vs-button size="large" @click="reopenRequestStatus(userRequestData)" class="mt-4 ac" warn gradient>
+                        Reabrir Pedido
+                    <BIconEject class="ml-2 icon-size-20"/>
+                </vs-button>
                </div>
 
                 <div>
@@ -66,6 +76,11 @@
 
         </vs-dialog>
 
+        <vs-dialog blur v-model="sucessModal">
+            <h1>Sucesso</h1>
+            <p>Pedido alterado com sucesso</p>
+        </vs-dialog>
+        
         <vs-dialog blur v-model="alertModal">
             <h1>alerta</h1>
             <p>Este pedido foi criado por você</p>
@@ -82,7 +97,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { BIconCart3, BIconGeo, BIconChat, BIconX, BIconCheck2All } from 'bootstrap-vue';
+import { BIconCart3, BIconGeo, BIconChat, BIconX, BIconCheck2All, BIconEject } from 'bootstrap-vue';
 import DetailMap from './cpmMap';
 import sweetAlert from 'sweetalert2';
 
@@ -90,38 +105,65 @@ import sweetAlert from 'sweetalert2';
 export default {
 
     components:{
+
         BIconCart3,
         BIconGeo,
         DetailMap,
         BIconChat,
-        BIconX, BIconCheck2All
+        BIconX, 
+        BIconCheck2All,
+        BIconEject
+ 
     },
 
     data:() => ({
+
         errorModal: false,
         alertModal: false,
         redirectModal: false,
+        sucessModal: false,
 
         requestPreferences: false,
 
         url:process.env.VUE_APP_PROD_URL,
 
-        
     }),
 
     computed: {
 
         ...mapGetters({
+
             userRequestData: 'userRequestData',
+
         })
 
     },
 
+    created() {
+        this.checkTypeUser()
+    },
+
     methods: {
 
-        // iniciateChat(param){
-        //     console.log(param)
-        // },
+        checkTypeUser(){
+            let logedId = localStorage.getItem('id')
+
+            console.log(logedId)
+            console.log(this.userRequestData)
+
+            if(logedId == this.userRequestData.user[0]._id || logedId == this.userRequestData.user[0]){
+                
+                console.log("IDs são iguais")
+                this.requestPreferences = true
+
+            }else{
+                console.log("IDs diferentes")
+                
+                this.requestPreferences = false
+            
+            }
+        },
+        
 
         iniciateChat(param){
             // console.log("ID DO PEDIDO")
@@ -138,7 +180,6 @@ export default {
                 console.log("IDs são iguais")
                 
                 this.alertModal = true
-                this.requestPreferences = true
 
             }else{
 
@@ -196,13 +237,72 @@ export default {
             }
         },
 
+        reopenRequestStatus(param){
+            
+            let body = {
+                
+                request_id:param._id,
+                status: 'new'
+
+            }
+            console.log(body)
+
+            this.$http.put(this.url + '/update/status', body)
+            .then(response => {
+
+                if(response.status == 200){ this.sucessModal = true }
+
+            })
+
+            .catch(err => {
+                console.log(err)
+
+                if(response.status == 200){ this.errorModal = true }
+          })
+        },
+
 
         cancelRequestStatus(param){
             console.log(param._id)
         },
 
         attendRequestStatus(param){
-            console.log(param._id)
+
+            let body = {
+
+                request_id:param._id,
+                status: 'taked'
+
+            }
+            console.log(body)
+            this.$emit('closeModal', false)
+
+            this.$http.put(this.url + '/update/status', body)
+            .then(response => {
+
+                // if(response.status == 200){
+
+                //     sweetAlert.fire({
+                //         icon: 'success',
+                //         title: 'Pedido alterado com sucesso',
+                //         showConfirmButton: true
+                //     })
+
+                // }
+
+            })
+
+            .catch(err => {
+                console.log(err)
+
+                // sweetAlert.fire({
+                //     icon: 'error',
+                //     title: 'ops! algo deu errado.',
+                //     showConfirmButton: true
+                // })
+
+          })
+
         }
     },
        
