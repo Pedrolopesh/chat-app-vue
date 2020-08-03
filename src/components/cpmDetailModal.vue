@@ -185,7 +185,7 @@ export default {
 
                 let objChat = {
                     user_response: param.user[0]._id,
-                    user_origin: id,
+                    user_origin: logedId,
                 }
 
                 var today = new Date();
@@ -200,7 +200,7 @@ export default {
 
                 let body = {
                     user_response: param.user[0]._id,
-                    user_origin: id,
+                    user_origin: logedId,
                     chatData:[{
                         sender: 'origin',
                         message:'olá, ainda precisa de uma ajuda com seu pedido',

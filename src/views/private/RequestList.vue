@@ -7,6 +7,11 @@
                 <BIconArrowLeft @click="backStep()" class="mr-a display-b"/>
             </div> -->
 
+            <span class="mt-9 display-b" v-if="userData.request == '' ">
+                <h3>Você ainda não Fez nenhum pedido 🛒</h3>
+            </span>
+
+
             <div class="container-list-chats ac" v-for="(item, i) in userData.request" :key='i'>
                 <!-- <b-btn @click="selectRequest(item)" variant="outline-primary" class="chat-item display-b ac mt-2">
                     <div class="display-f mt-2">

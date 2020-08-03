@@ -67,10 +67,11 @@ export default {
             this.$http.post(this.url + '/signup', body).then(response => {
             
                 sweetAlert.fire({
-                    icon: 'sucess',
+                    icon: 'success',
                     title: 'Usuário criado com sucesso',
                     showConfirmButton: true
                 })
+                
             this.$router.push('/About')
 
             }).catch(err => {

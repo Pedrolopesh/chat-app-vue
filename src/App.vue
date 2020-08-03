@@ -4,6 +4,35 @@
   </div>
 </template>
 
+<script>
+import {
+  mapGetters, mapActions
+} from 'vuex';
+
+export default {
+
+      computed: {
+
+        ...mapGetters({
+            
+            userData: 'userData',
+
+        }),
+
+    },
+
+    created() {
+      this.changeUserData()
+    },
+
+    methods: {
+      ...mapActions({
+          changeUserData: 'changeUserData',
+      }),
+    },
+}
+</script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
