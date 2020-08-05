@@ -76,6 +76,25 @@
 
         </vs-dialog>
 
+        <vs-dialog blur v-model="optionsModal">
+            <div class="p15">
+
+                <h2>Quem atendeu ao seu pedio ?</h2>
+                <p>Pedido alterado com sucesso</p>
+
+                <vs-select placeholder="Select" class="ac" v-model="selectedUser">
+                    <vs-option label="Vuesax" value="1"> Vuesax </vs-option>
+                    <vs-option label="Vue" value="2"> Vue </vs-option>
+                    <vs-option label="Javascript" value="3"> Javascript </vs-option>
+                    <vs-option disabled label="Sass" value="4"> Sass </vs-option>
+                    <vs-option label="Typescript" value="5"> Typescript </vs-option>
+                    <vs-option label="Webpack" value="6"> Webpack </vs-option>
+                    <vs-option label="Nodejs" value="7"> Nodejs </vs-option>
+                </vs-select>
+
+            </div>
+        </vs-dialog>
+        
         <vs-dialog blur v-model="sucessModal">
             <h1>Sucesso</h1>
             <p>Pedido alterado com sucesso</p>
@@ -118,12 +137,17 @@ export default {
 
     data:() => ({
 
+        // socket: io('http://localhost:3333'),
+
         errorModal: false,
         alertModal: false,
         redirectModal: false,
         sucessModal: false,
+        optionsModal: false,
 
         requestPreferences: false,
+
+        selectedUser: '',
 
         url:process.env.VUE_APP_PROD_URL,
 
@@ -212,6 +236,8 @@ export default {
             this.$http.post(this.url + '/create/chat', body).then(response => {
 
                 if(response.status == 400){
+
+                    this.socket.emit('sendMessage', body.chatData);
 
                     this.errorModal = true
 

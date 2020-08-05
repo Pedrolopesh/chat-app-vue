@@ -4,7 +4,7 @@
         <div>
             <!-- <h3>Live chat</h3> -->
 
-      <div class="ac chat-container mb-5">
+      <div class="ac chat-container">
 
 
 
@@ -18,10 +18,10 @@
         <!-- {{ chatId }} ? -->
 
         <!-- {{ chatMessages.length }} -->
-        <div v-if="chatMessages.length > 0"> 
+        <div v-if="chatMessages.length > 0" class="chat-content"> 
 
 
-               <div v-for="(messageObj, i) in chatMessages" :key="i" class="p15">
+          <div v-for="(messageObj, i) in chatMessages" :key="i" class="p15">
        
       
           
@@ -52,107 +52,24 @@
                       <span class="display-b alg-txt-s"> <strong>mensagem:</strong> {{ messageObj.message }} </span>
                       <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small>
               </div>
-            
 
 
             </div>
-
-
-          <!-- CARA QUE RESPONDE O CRIADO DO CHAT  -->
-          <!-- <div class="chat-response-container mt-5">
-
-          <b-avatar :src='item.user_response[0].imageProfile' class="mr-3 mt-3"></b-avatar>
-
-            <div class="display-b"> 
-
-              <div v-for="(item, i) in item.chatData" :key="i">
-                <span v-if="item.sender == 'response' ">
-                
-                    <span>
-                      <strong>mensagem:</strong> {{ item.message }}
-                      <small class="display-b alg-txt-s">{{ item.timestamp }}</small>
-                    </span>
-                
-                </span>
-              </div>
-            
-            </div>
-
-          </div> -->
-          
-
-          <!-- CRIADOR DO CHAT / PRIMEIRA PESSOA QUE MANDA MENSAGEM -->
-          <!-- <div class="chat-origin-container mt-3">
-          
-            <b-avatar :src='item.user_origin[0].imageProfile' class="mr-3"></b-avatar>
-            
-            <div class="display-b">
-              
-              <div v-for="(item, i) in item.chatData" :key="i">
-                
-                <span v-if="item.sender == 'origin' ">
-                
-                    <span class="mt-2 display-b alg-txt-s">
-                      <strong>mensagem:</strong> {{ item.message }}
-                      <small class="display-b alg-txt-s">{{ item.timestamp }}</small>
-                    </span>
-                
-                </span>
-              
-              </div>
-            
-            </div>
-          
-          </div> -->
-         
-         
-
-            <!-- <span v-else-if="item.sender == 'response' ">
-                <h3>mensagem minha</h3>
-            </span> -->
             
         </div>
+              <!-- <span id="view">view</span> -->
 
         </div>  
        
 
-              <div class="text-box-chat">
-          <div class="display-f">
-              <textarea v-model="newMessage"/> 
-              <BIconCursor @click="createMessage()" class="mt-2 ml-2 cp send-message-icon"/>
+          <div class="text-box-chat">
+            <div class="display-f">
+                <textarea class="text-input-chat" v-model="newMessage"/> 
+                
+                <BIconCursor @click="createMessage()" class="mt-2 ml-2 cp send-message-icon"/>
+                
+            </div>
           </div>
-        </div>
-
-
-
-        <!-- MENSAGEM RECIBIDA -->
-
-        <!-- <div class="body-container-chat" v-for="(item, i) in messagens" :key="i">
-          <div class="message-sended-box">
-            <span class="clr-whi alg-txt-s display-b">{{ item.sendedName }}</span>
-
-            <span class="clr-whi alg-txt-s display-b mt-3">{{ item.message }}</span>
-          </div>
-          <small class="alg-txt-s display-b">{{ item.sendedTimestamp }}</small>
-        </div> -->
-
-        <!-- MENSAGEM RECIBIDA -->
-
-
-        <!-- MENSAGEM ENVIADA -->
-
-        <!-- <div class="body-container-chat" v-for="(item, i) in originUserMessage" :key="i">
-          <div class="ml-a message-send-box">
-            <span class="alg-txt-s display-b">{{ item.user_origin }}</span>
-
-            <span class="alg-txt-s display-b mt-3">{{ item.message }}</span>
-          </div>
-          <small class="alg-txt-e display-b">{{ item.timeStamp }}</small>
-        </div> -->
-
-        <!-- MENSAGEM ENVIADA -->
-
-
 
         </div>
 
@@ -350,8 +267,31 @@ export default {
 
           // this.$http.post(this.url + '/create/chat', body)
           this.$http.put(this.url + '/send/message', body)
-          .then(response => {
-            console.log(response)
+          .then(resp => {
+            console.log(resp)
+
+            if(resp.status == 200){
+
+              setTimeout( () => { this.loadChatById() }, 500);
+              setTimeout( () => { this.location = "#view"; }, 1000);
+              
+              // this.loadChatById()
+
+            }else{
+
+              alert('erro ao manda mensagem')
+
+            }
+
+          })
+
+          .catch(err => {
+            console.log(err)
+            sweetAlert.fire({
+                icon: 'error',
+                title: 'ops! algo deu errado.',
+                showConfirmButton: true
+            })
           })
 
         
@@ -371,7 +311,6 @@ export default {
 
         // }
 
-        this.loadChatById()
 
       },
 

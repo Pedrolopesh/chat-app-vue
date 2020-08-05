@@ -29,6 +29,13 @@
     width: 100%;
 }
 
+.chat-content{
+    display: block;
+    height: 50vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
 .chat-container{
     max-width: 100%;
     width: 100%;
@@ -54,14 +61,17 @@
     .text-box-chat{
         display: block;
         padding: 10px;
-        background-color: rgb(240, 240, 240);
-        border-radius: 0px 0px 10px 10px;
+        // background-color: rgb(240, 240, 240);
+        border-radius: 10px;
         border: 0.1px solid rgba(187, 187, 187, 0.267);
         
         .text-input-chat{
             display: block;
             background-color: transparent;
             border: none;
+            border-bottom: 1px solid black;
+            max-width: 100%;
+            width: 100%;
         }
         
         .send-message-icon{

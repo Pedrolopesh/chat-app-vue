@@ -67,7 +67,7 @@
             </div>
 
 
-            <vs-dialog blur scroll v-model="chatModal">
+            <vs-dialog  prevent-close blur scroll v-model="chatModal">
 
 
                 <template #header>
