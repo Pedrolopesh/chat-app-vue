@@ -2,6 +2,7 @@
 @import 'node_modules/bootstrap-vue/src/index.scss';
 @import './headerStyle.scss';
 @import './components.scss';
+@import './carousel.scss';
 @import './chatStyle.scss';
 @import './_align.scss';
 
@@ -74,6 +75,9 @@ button, input, textarea, svg{
     width: 100%;
 }
 
+.icon-size-60{
+    font-size: 60px;
+}
 .icon-size-30{
     font-size: 30px;
 }

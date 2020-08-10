@@ -137,8 +137,6 @@ export default {
 
     data:() => ({
 
-        // socket: io('http://localhost:3333'),
-
         errorModal: false,
         alertModal: false,
         redirectModal: false,
@@ -237,7 +235,6 @@ export default {
 
                 if(response.status == 400){
 
-                    this.socket.emit('sendMessage', body.chatData);
 
                     this.errorModal = true
 

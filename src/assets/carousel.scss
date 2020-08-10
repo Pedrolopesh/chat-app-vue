@@ -1,0 +1,69 @@
+.carousel{
+    
+    .card-carousel{
+        display: block;
+        // border: 1px solid black;
+    }
+
+    .agile__actions{
+        button{
+            // border: 0.5px solid black;
+            min-height: 50px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px;
+            max-width: 20%;
+            width: 100%;
+            display: block;
+            background: rgba(219, 219, 219, 0.322);
+
+        }
+
+        .agile__dots{
+            display: none;
+        }
+    }
+}
+
+.icon-step-1{
+    padding: 20px;
+    border-radius: 0px 0px 10px 10px;
+    // background: rgba(219, 219, 219, 0.322);
+
+    img{
+        max-width: 20%;
+        width: 100%;
+    }
+}
+
+.icon-step-2{
+    padding: 20px;
+    border-radius: 0px 0px 10px 10px;
+    // background: rgba(219, 219, 219, 0.322);
+
+    img{
+        max-width: 20%;
+        width: 100%;
+    }
+}
+
+.icon-step-3{
+    padding: 20px;
+    border-radius: 0px 0px 10px 10px;
+    // background: rgba(219, 219, 219, 0.322);
+    max-width: 100%;
+    
+    img{
+        width: 100%;
+    }
+}
+
+.skip-link{
+    display: block;
+    max-width: 20%;
+    width: 100%;
+
+    &:hover{
+        color: #ff3f7f;
+    }
+}

@@ -64,24 +64,34 @@ export default {
                 password:this.userForm.password
             }
 
-            this.$http.post(this.url + '/signup', body).then(response => {
+            this.$http.post(this.url + '/signup', body)
             
+            .then(resp => {
+            
+
+                if(resp.data.success == true){
+
+                localStorage.setItem('token', resp.data.token)
+                localStorage.setItem('id', resp.data._id)
+
                 sweetAlert.fire({
                     icon: 'success',
                     title: 'Usuário criado com sucesso',
                     showConfirmButton: true
                 })
                 
+                }else{
+
+                    sweetAlert.fire({
+                        icon: 'error',
+                        title: 'ops! algo deu errado.',
+                        showConfirmButton: true
+                    })
+
+                }
+
             this.$router.push('/About')
 
-            }).catch(err => {
-                
-                sweetAlert.fire({
-                    icon: 'error',
-                    title: 'ops! algo deu errado.',
-                    showConfirmButton: true
-                })
-            
             })
         }
     },

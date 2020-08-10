@@ -2,93 +2,56 @@
     <div>
 
         <div>
-            <!-- <h3>Live chat</h3> -->
 
-      <div class="ac chat-container">
-
+        <div class="ac chat-container">
 
 
-        <!-- <div class="header-container-chat">
-          <h3 class="clr-whi display-b ml-2">Live chat</h3>
-        </div> -->
 
+          <div v-if="chatMessages.length > 0" class="chat-content"> 
 
-        <!-- {{ selectedChatData.chatData }} -->  
+            <div v-for="(messageObj, i) in chatMessages" :key="i" class="p15">
+              
+              <div class="message-block">
 
-        <!-- {{ chatId }} ? -->
-
-        <!-- {{ chatMessages.length }} -->
-        <div v-if="chatMessages.length > 0" class="chat-content"> 
-
-
-          <div v-for="(messageObj, i) in chatMessages" :key="i" class="p15">
-       
-      
-          
-            
-          <!-- {{ item }}-->
-            <div class="message-block">
-
-              <div v-if="messageObj.sender == 'origin'">
-                      <div v-if="chatOrigin.user_origin.imageProfile != '' ">
-                        <b-avatar :src='chatOrigin.user_origin.imageProfile' class="mr-a display-b mt-3"></b-avatar>
-                      </div>
-                    <!-- <p>From sender ( {{messageObj.sender}})</p> -->
-                    <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatOrigin.user_origin.name }} </span>
-                    <span class="display-b alg-txt-s"> <strong>mensagem:</strong> {{ messageObj.message }} </span>
-                    <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small>
-              </div> 
-
-              <div v-else>
-                      <!-- {{ chatResponder.user_response.imageProfile }} -->
-                      <!-- <b-avatar :src='chatResponder.user_response.imageProfile' class="mr-a display-b mt-3"></b-avatar> -->
-
-                      <div v-if="chatResponder.user_response.imageProfile != '' ">
-                        <b-avatar :src='chatResponder.user_response.imageProfile' class="mr-a display-b mt-3"></b-avatar>
-                      </div>
-
-                      <!-- <p>From sender ( {{messageObj.sender}})</p> -->
-                      <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatResponder.user_response.name }} </span>
+                <div v-if="messageObj.sender == 'origin'">
+                        <div v-if="chatOrigin.user_origin.imageProfile != '' ">
+                          <b-avatar :src='chatOrigin.user_origin.imageProfile' class="mr-a display-b mt-3"></b-avatar>
+                        </div>
+                      <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatOrigin.user_origin.name }} </span>
                       <span class="display-b alg-txt-s"> <strong>mensagem:</strong> {{ messageObj.message }} </span>
                       <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small>
+                </div> 
+
+                <div v-else>
+                  <div v-if="chatResponder.user_response.imageProfile != '' ">
+                    <b-avatar :src='chatResponder.user_response.imageProfile' class="mr-a display-b mt-3"></b-avatar>
+                  </div>
+
+                  <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatResponder.user_response.name }} </span>
+                  <span class="display-b alg-txt-s"> <strong>mensagem:</strong> {{ messageObj.message }} </span>
+                  <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small>
+                </div>
+
+
               </div>
-
-
-            </div>
-            
-        </div>
-              <!-- <span id="view">view</span> -->
-
-        </div>  
-       
-
-          <div class="text-box-chat">
-            <div class="display-f">
-                <textarea class="text-input-chat" v-model="newMessage"/> 
-                
-                <BIconCursor @click="createMessage()" class="mt-2 ml-2 cp send-message-icon"/>
-                
-            </div>
+              
           </div>
 
-        </div>
+          </div>  
+        
+
+            <div class="text-box-chat">
+              <div class="display-f">
+                  <textarea class="text-input-chat" v-model="newMessage"/> 
+                  
+                  <BIconCursor @click="createMessage()" class="mt-2 ml-2 cp send-message-icon"/>
+                  
+              </div>
+            </div>
+
+          </div>
 
       </div>
-
-        <!-- MENSAGEM RECIBIDA -->
-
-        <!-- <div v-for="(item, i) in messagens" :key="i">
-          <div >
-            <span>{{ item.sendedName }}</span>
-
-            <span>{{ item.SendedMessage }}</span>
-          </div>
-          <small>{{ item.sendedTimestamp }}</small>
-        </div> -->
-
-        <!-- MENSAGEM RECIBIDA -->
-
-
 
 
       </div>
@@ -106,7 +69,7 @@ export default {
   
     data:() => ({
         
-        // socket: io('http://localhost:3333'),
+        socket: io('http://localhost:3333'),
         messagens:[
           {sendedName:'Fernanda', SendedMessage:'olá pedro, esse vai ser o nosso chat', sendedTimestamp:'08:00'},
         ],
@@ -118,11 +81,11 @@ export default {
 
         url:process.env.VUE_APP_PROD_URL,
 
+        newSocketMessage:[],
+
         chatMessages:[],
         chatOrigin: {},
         chatResponder: {},
-        
-        // chatId: 'KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK',
 
     }),
     computed: {
@@ -141,14 +104,15 @@ export default {
         // this.renderchatMessages()
         this.transformdate()
         this.loadChatById()
-        // let vm = this;
-        // this.socket.on('messageRecived', function(message) {
-        //   console.log("AQUI")
 
-        //   console.log(message)
-        //   vm.originUserMessage.push(message)
+        let vm = this;
+        this.socket.on('messageRecived', function(message) {
+          console.log("AQUI")
+
+          console.log(message)
+          vm.newSocketMessage.push(message)
    
-        // })
+        })
     },
 
     methods: {
@@ -261,6 +225,7 @@ export default {
                   timestamp: this.currentTimestamp
                 }
             }
+          this.socket.emit('sendMessage', body.chatData);
 
             console.log(body)
 
@@ -337,5 +302,11 @@ export default {
       }
         
     },
+
+    watch:{
+      newSocketMessage(){
+        setTimeout(() => (this.loadChatById()), 5000)
+      }
+    }
 }
 </script>

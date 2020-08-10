@@ -54,12 +54,21 @@
                 </b-col>
             </b-row>
         </b-container>
+
+        <vs-dialog v-model="errorLogin">
+            <!-- <template #header> -->
+                <h4 class="p15">
+                    Erro ao Entrar, Tende novamente
+                </h4>
+            <!-- </template> -->
+        </vs-dialog>
+
     </div>
 </template>
 <script>
 import Svgs from '../../assets/svgs/svgSet'
 import { BIconEye, BIconEyeSlash } from 'bootstrap-vue';
-
+import sweetAlert from 'sweetalert2';
 
 export default {
     components:{
@@ -71,6 +80,7 @@ export default {
         Svgs:Svgs,
 
         hasVisiblePassword: false,
+        errorLogin: false,
 
         url:process.env.VUE_APP_PROD_URL,
 
@@ -127,20 +137,29 @@ export default {
                 email:this.email,
                 password:this.password
             }
-            this.$http.post(this.url + '/login', body).then(response => {
-                localStorage.setItem('token', response.data.token)
-                localStorage.setItem('id', response.data.user_id)
+            this.$http.post(this.url + '/login', body).then(resp => {
+                localStorage.setItem('token', resp.data.token)
+                localStorage.setItem('id', resp.data.user_id)
 
-                console.log(response)
-                if(response.data != '' && response.status == 200){
+                console.log(resp)
+                if(resp.data != '' && resp.status == 200){
                     this.$router.push('/DashBoard')
-                }else{
-                    alert("error")
+                }else if(resp.status == 401){
+                    sweetAlert.fire({
+                        icon: 'error',
+                        title: 'ops! algo deu errado.',
+                        showConfirmButton: true
+                    })
                 }
             })
             .catch(err => {
                 console.log(err)
-                alert("error")
+                sweetAlert.fire({
+                    icon: 'error',
+                    title: 'ops! algo deu errado.',
+                    showConfirmButton: true
+                })
+
             })
             // console.log(this.$http)
         }

@@ -8,6 +8,7 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import Vuesax from 'vuesax'
 import vmodal from 'vue-js-modal'
 import VueSweetalert2 from 'vue-sweetalert2';
+import VueAgile from 'vue-agile'
 
 import 'leaflet/dist/leaflet.css';
 import './assets/index.scss';
@@ -28,6 +29,7 @@ Icon.Default.mergeOptions({
 });
 
 
+Vue.use(VueAgile)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueSweetalert2)
