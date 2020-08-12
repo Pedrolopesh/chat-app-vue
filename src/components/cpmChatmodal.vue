@@ -69,7 +69,7 @@ export default {
   
     data:() => ({
         
-        socket: io('http://localhost:3333'),
+        socket: io('https://help-delivery-app.herokuapp.com/api/'),
         messagens:[
           {sendedName:'Fernanda', SendedMessage:'olá pedro, esse vai ser o nosso chat', sendedTimestamp:'08:00'},
         ],
