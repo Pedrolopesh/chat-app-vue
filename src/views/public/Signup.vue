@@ -80,6 +80,8 @@ export default {
                     showConfirmButton: true
                 })
                 
+                this.$router.push('/About')
+                
                 }else{
 
                     sweetAlert.fire({
@@ -90,7 +92,6 @@ export default {
 
                 }
 
-            this.$router.push('/About')
 
             })
         }
