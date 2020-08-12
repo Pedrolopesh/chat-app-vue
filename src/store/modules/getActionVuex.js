@@ -77,7 +77,7 @@ export default {
         changeListRequest(context){
             axios.get(process.env.VUE_APP_PROD_URL + '/list/request').then(response => {
               // console.log(response)
-              context.commit('setListRequest', response.data)
+              context.commit('setListRequestByStatus', response.data)
             })
         },
 

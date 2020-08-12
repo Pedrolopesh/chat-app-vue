@@ -12,8 +12,11 @@
 
         <b-row class="brake-small" cols="3" v-else>
             <b-col class="brake-container" v-for="(item, i) in listRequestByStatus" :key='i'>
-                <b-card v-if="item" class="mt-3 alg-txt-c card-style-2" @click="OpenInfoModal(item)">
+                <!-- {{ item }} -->
+                <b-card v-if="item" class="mt-3 mp0 alg-txt-c card-style-2" :class="[item.status == 'new' ?'border-g' : 'border-o']" @click="OpenInfoModal(item)">
                     
+                    <div class="p15">
+
                     <div class="display-f">
                         <strong class="ac">Pedido {{ i+1 }} </strong>
                         <BIconTrash class="clr-red display-b alg-txt-e"/>
@@ -31,7 +34,11 @@
                         <span class="mt-2 display-b"><strong>{{ item.address }}</strong> </span>
                         <span class="mt-2 display-b"><strong>R$ {{ item.fee }}</strong> </span>
                     </div>
+                    
+                    </div>
 
+                    <span :class="[item.status == 'new' ?'status-new' : 'status-interest']" class="status" v-if='item.status == "new"'>New!</span>
+                    <span :class="[item.status == 'new' ?'status-new' : 'status-interest']" class="status" v-else>Vizualizada</span>
                 </b-card>
             </b-col>
         </b-row>
@@ -107,7 +114,7 @@ export default {
             // this.$http.get(this.url + '/list/request').then(response => {
                 // })
             this.changeListRequest()
-            this.changeListRequestByStatus('new')
+            // this.changeListRequestByStatus('new')
 
         },
 

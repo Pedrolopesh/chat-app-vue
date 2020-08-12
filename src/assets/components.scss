@@ -51,15 +51,49 @@
     box-shadow: 7px 6px 15px rgba(110, 110, 110, 0.424) !important;
 }
 .card-style-2{
+    .card-body{
+        padding: 0;
+    }
+    // background: linear-gradient(45deg, #fd5858, #ff693c);
     display: block !important;
     border-radius: 10px !important;
     box-shadow: 7px 6px 15px rgba(110, 110, 110, 0.424) !important;
-
+    // color: rgb(240, 240, 240);
+    
     &:hover{
         cursor: pointer;
         transition: 0.3s;
         transform: scale(1.03);
     }
+}
+.border-g{
+    border: 2px solid #4df4c3 !important;
+    
+}
+
+.border-o{
+    border: 2px solid #ff693c !important;
+
+}
+
+.status{
+    max-width: 50%;
+    display: block;
+    margin-left: auto;
+    color: white;
+    width: 100%;
+    border-radius: 10px 0px 6px 0px;
+    height: 34px;
+    padding: 7px;
+    // background: linear-gradient(45deg, #fd5858, #ff693c);
+}
+
+.status-new{
+    background: linear-gradient(90deg, rgba(62,228,255,1) 0%, rgba(88,255,152,1) 100%);
+}
+
+.status-interest{
+    background: linear-gradient(45deg, #fd5858, #ff693c);
 }
 .btn-sidebar{
     max-width: 100%;

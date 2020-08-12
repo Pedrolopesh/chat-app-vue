@@ -7,7 +7,7 @@
         </div> -->
 
                 <h3 class="mt-3 mb-3">Pedido: {{ userRequestData.name }}</h3>
-                
+
                 <div v-if="userRequestData.user[0].name != null ">
                     <span>{{ userRequestData.user[0].name }}</span>
                     <b-avatar class="ml-2" :src='userRequestData.user[0].imageProfile'></b-avatar>
@@ -232,15 +232,24 @@ export default {
 
 
             this.$http.post(this.url + '/create/chat', body).then(response => {
-
+                
                 if(response.status == 400){
-
-
+                    
+                    
                     this.errorModal = true
 
                 }else{
                     
                     console.log(response)
+                    let body = {
+                        request_id: this.userRequestData._id,
+                        status: 'interest'
+                    }
+                    
+                    this.$http.put(this.url + '/update/status', body)
+                    .then(resp => {
+                        console.log("Foi")
+                    })
 
                     this.redirectModal = true
 
