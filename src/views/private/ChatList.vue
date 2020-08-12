@@ -9,7 +9,16 @@
             <!-- {{ userData.chats[1] }} -->
 
             <!-- <button @click="consultUsers">teste</button> -->
-            <span class="mt-9 display-b" v-if="items == '' ">
+            response: {{ responseData }}
+            <br />
+            no data: {{ noData }}
+            <br />
+            <span v-if="responseData">
+                <b-spinner label="Spinning"></b-spinner>
+                <h3>Carregando...</h3>
+            </span>
+
+            <span class="mt-9 display-b" v-if="noData">
                 <h3>Você ainda não iniciou nenhuma conversa 😪</h3>
             </span>
 
@@ -121,8 +130,10 @@ export default {
         userType:'',
 
         items:[],
+        noData: false,
         chatModal: false,
         url:process.env.VUE_APP_PROD_URL,
+        responseData: false,
     }),
     
     computed: {
@@ -147,7 +158,7 @@ export default {
     created(){
         // this.checkItensData()
         this.checkAciveChats()
-        // setTimeout( () => {this.consultUsers()}, 100);
+        
     },
 
     methods:{
@@ -156,29 +167,41 @@ export default {
         }),
 
         checkAciveChats(){
-            
+            this.responseData = true
             // console.log(this.userData.chats)
             let logedId = localStorage.getItem('id')
             this.$http.get(this.url + `/user/${logedId}`).then(response => {
-
+                
                 let chats = response.data.chats
 
             for(let i in chats){
                 
                 let id = chats[i]._id
                 
-                this.$http.get(this.url + `/chat/messages/${id}`).then(response => {
+                this.$http.get(this.url + `/chat/messages/${id}`)
+                
+                .then(resp => {    
+                    if(resp.data == ''){
+                        this.responseData = false
+                        this.noData = true
+                    }else{
+                        this.responseData = false
+                        this.noData = false
+                    }
+                    this.checkTypeUser(resp.data)
 
-                    this.checkTypeUser(response.data)
-
-                    // console.log("sodojasodjoaisjdiosodasojoj")
-                    // console.log(response.data)
-                    this.items.push(response.data)
-
+                    this.items.push(resp.data)
+                    // setTimeout( () => {  this.checkDatas() }, 200);
                 })
-            
+                .catch(err => {
+                    this.responseData = false
+                    this.noData = true
+                })
             }
-
+            })
+            .catch(err => {
+                this.responseData = false
+                this.noData = true
             })
         },
 

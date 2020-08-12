@@ -13,22 +13,22 @@
                     <b-avatar class="ml-2" :src='userRequestData.user[0].imageProfile'></b-avatar>
                 </div>
 
-                <div>
+                <div class="p10">
                     <BIconCart3 class="mr-1"/>
                     <span>{{ userRequestData.placeName }}</span>
                 </div>
 
-                <div>
+                <div class="p10">
                     Descrição:
                     <span>{{ userRequestData.description }}</span>
                 </div>
 
-                <div>
+                <div class="p10">
                     Taxa para entrega:
                     <strong>R$ {{ userRequestData.fee }}</strong>
                 </div>
 
-                <div>
+                <div class="p10">
                     <BIconGeo class="mr-1"/>
                     <span>{{ userRequestData.address }}</span>
                 </div>
