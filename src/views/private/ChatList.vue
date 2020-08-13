@@ -9,10 +9,10 @@
             <!-- {{ userData.chats[1] }} -->
 
             <!-- <button @click="consultUsers">teste</button> -->
-            response: {{ responseData }}
+            <!-- response: {{ responseData }}
             <br />
             no data: {{ noData }}
-            <br />
+            <br /> -->
             <span v-if="responseData">
                 <b-spinner label="Spinning"></b-spinner>
                 <h3>Carregando...</h3>
@@ -25,11 +25,12 @@
 
             <div @click="selectUser(item)" class="container-list-chats ac" v-for="(item, i) in items" :key='i'>
 
+                        <!-- {{ item.user_origin }} -->
+                        <!-- {{ item.user_response }} -->
                 
                 <div v-if=" userType == 'user_response' ">
 
                     <div v-for="(item, i) in item.user_response" :key="i">
-
                             <vs-button
                                 class="display-b ac mt-2"
                                 size="large"

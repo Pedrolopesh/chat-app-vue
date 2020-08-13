@@ -11,6 +11,8 @@ export default new Vuex.Store({
   state: {
     selectedChatData:'',
 
+    newMessage:'',
+
     userRequestData:'',
     requestSelectedId:'',
     coordinateSelectedRequest:'',
@@ -19,6 +21,7 @@ export default new Vuex.Store({
     chatData:''
   },
   getters:{
+    newMessage: state => state.newMessage,
     selectedChatData: state => state.selectedChatData,
     userRequestData: state => state.userRequestData,
     requestSelectedId: state => state.requestSelectedId,
@@ -28,8 +31,8 @@ export default new Vuex.Store({
     chatData: state => state.chatData,
   },
   mutations: {
-    setSelectedChatData(state, newSate){
-      state.selectedChatData = newSate
+    setNewMessagea(state, newSate){
+      state.newMessage = newSate
     },
     setChatData(state, newSate){
       state.chatData = newSate

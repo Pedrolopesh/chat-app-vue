@@ -44,7 +44,9 @@
               <div class="display-f">
                   <textarea class="text-input-chat" v-model="newMessage"/> 
                   
-                  <BIconCursor @click="createMessage()" class="mt-2 ml-2 cp send-message-icon"/>
+                  <button type="submit" class="send-message-button">
+                    <BIconCursor @click="createMessage()" class="mt-2 ml-2 cp send-message-icon"/>
+                  </button>
                   
               </div>
             </div>
@@ -237,6 +239,7 @@ export default {
 
             if(resp.status == 200){
 
+              this.newMessage = ''
               setTimeout( () => { this.loadChatById() }, 500);
               setTimeout( () => { this.location = "#view"; }, 1000);
               
