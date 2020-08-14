@@ -82,14 +82,14 @@
                 <h2>Quem atendeu ao seu pedio ?</h2>
                 <p>Pedido alterado com sucesso</p>
 
-                <vs-select placeholder="Select" class="ac" v-model="selectedUser">
-                    <vs-option label="Vuesax" value="1"> Vuesax </vs-option>
-                    <vs-option label="Vue" value="2"> Vue </vs-option>
-                    <vs-option label="Javascript" value="3"> Javascript </vs-option>
-                    <vs-option disabled label="Sass" value="4"> Sass </vs-option>
-                    <vs-option label="Typescript" value="5"> Typescript </vs-option>
-                    <vs-option label="Webpack" value="6"> Webpack </vs-option>
-                    <vs-option label="Nodejs" value="7"> Nodejs </vs-option>
+                {{ selectedUser }}
+
+                <vs-select 
+                    placeholder="Select"
+                    class="ac"
+                    v-model="selectedUser"
+                >
+                    <vs-option v-for="(i, item) in arrayItems" :key="item" label="Vuesax" :value="i.id"> {{ i.name }} </vs-option>
                 </vs-select>
 
             </div>
@@ -115,7 +115,7 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { BIconCart3, BIconGeo, BIconChat, BIconX, BIconCheck2All, BIconEject } from 'bootstrap-vue';
 import DetailMap from './cpmMap';
 import sweetAlert from 'sweetalert2';
@@ -149,12 +149,18 @@ export default {
 
         url:process.env.VUE_APP_PROD_URL,
 
+        arrayItems:[
+            {id:1, name:'Vuex'}, {id:2, name:'Vuesax 4'}, {id:3, name:'Vuetify'}, {id:4, name:'vue'}
+        ]
+
     }),
 
     computed: {
 
         ...mapGetters({
 
+            userData: 'userData',
+            userChats: 'userChats',
             userRequestData: 'userRequestData',
 
         })
@@ -166,6 +172,10 @@ export default {
     },
 
     methods: {
+
+        ...mapActions({
+            changeUserChats: 'changeUserChats'
+        }),
 
         checkTypeUser(){
             let logedId = localStorage.getItem('id')
@@ -298,42 +308,51 @@ export default {
             console.log(param._id)
         },
 
-        attendRequestStatus(param){
+        async attendRequestStatus(param){
+            this.optionsModal = true
 
-            let body = {
+            console.log("ysgdigasyuidgsayuigdia")
+            
+            let logedId = localStorage.getItem('id')
 
-                request_id:param._id,
-                status: 'taked'
-
-            }
-            console.log(body)
-            this.$emit('closeModal', false)
-
-            this.$http.put(this.url + '/update/status', body)
-            .then(response => {
-
-                // if(response.status == 200){
-
-                //     sweetAlert.fire({
-                //         icon: 'success',
-                //         title: 'Pedido alterado com sucesso',
-                //         showConfirmButton: true
-                //     })
-
-                // }
-
+            this.$http.get(this.url + `/user/chats/${logedId}`).then(resp => {
+                console.log(resp.data)
             })
+            
+        //     let body = {
 
-            .catch(err => {
-                console.log(err)
+        //         request_id:param._id,
+        //         status: 'taked'
 
-                // sweetAlert.fire({
-                //     icon: 'error',
-                //     title: 'ops! algo deu errado.',
-                //     showConfirmButton: true
-                // })
+        //     }
+        //     console.log(body)
+        //     this.$emit('closeModal', false)
 
-          })
+        //     this.$http.put(this.url + '/update/status', body)
+        //     .then(response => {
+
+        //         // if(response.status == 200){
+
+        //         //     sweetAlert.fire({
+        //         //         icon: 'success',
+        //         //         title: 'Pedido alterado com sucesso',
+        //         //         showConfirmButton: true
+        //         //     })
+
+        //         // }
+
+        //     })
+
+        //     .catch(err => {
+        //         console.log(err)
+
+        //         // sweetAlert.fire({
+        //         //     icon: 'error',
+        //         //     title: 'ops! algo deu errado.',
+        //         //     showConfirmButton: true
+        //         // })
+
+        //   })
 
         }
     },

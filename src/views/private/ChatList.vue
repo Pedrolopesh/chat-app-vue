@@ -164,7 +164,7 @@ export default {
 
     methods:{
         ...mapActions({
-            changeListOpenChats: 'changeListOpenChats',
+            
         }),
 
         checkAciveChats(){

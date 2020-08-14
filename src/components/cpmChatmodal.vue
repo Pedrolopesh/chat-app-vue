@@ -34,8 +34,8 @@
 
 
               </div>
-              
           </div>
+          <span id="lastSendedMessage"></span>
 
           </div>  
         
@@ -109,9 +109,7 @@ export default {
 
         let vm = this;
         this.socket.on('messageRecived', function(message) {
-          console.log("AQUI")
-
-          console.log(message)
+          // console.log(message)
           vm.newSocketMessage.push(message)
    
         })
@@ -130,14 +128,10 @@ export default {
 
           this.$http.get(this.url + `/chat/messages/${this.chatId}`)
           .then(response => {
-           
 
-             
               let resp = response.data;
 
               this.chatCreator = resp.user_response
-
-              console.log(resp)
 
               let newOriginOBJ = {
                 chat_data: resp.user_response, 
@@ -145,16 +139,13 @@ export default {
               }
               this.chatOrigin = newOriginOBJ;
 
-
               let newResponderOBJ = {
                 chat_data: resp.user_response, 
                 user_response: resp.user_response[0]
               }
               this.chatResponder = newResponderOBJ
 
-
               this.chatMessages = resp.chatData;
-
             // this.selectedChatData = response.data
           })
           .catch(err => {
@@ -287,7 +278,7 @@ export default {
 
         let socket = this.socket
         this.socket.on('messageRecived', function(message) {
-          console.log("AQUI")
+
           // this.rendermessage(message)
           console.log(message)
           this.originUserMessage.push(param)

@@ -6,18 +6,20 @@ export default {
         userData:'',
         listRequest:'',
         listRequestByStatus:'',
-        listOpenChats:'',
+        userChats:'',
         requestById:'',
         chatById:'',
+        freeRequests:'',
     },
 
     getters: {
         userData: state => state.userData,
         listRequest: state => state.listRequest,
         listRequestByStatus: state => state.listRequestByStatus,
-        listOpenChats: state => state.listOpenChats,
+        userChats: state => state.userChats,
         requestById: state => state.requestById,
         chatById: state => state.chatById,
+        freeRequests: state => state.freeRequests,
     },
 
     mutations: {
@@ -30,14 +32,17 @@ export default {
         setListRequestByStatus(state, newSate){
             state.listRequestByStatus = newSate
         },
-        setOpenChats(state, newSate){
-            state.listOpenChats = newSate
+        setUserChats(state, newSate){
+            state.userChats = newSate
         },
         setRequestById(state, newSate){
             state.requestById = newSate
         },
         setChatById(state, newSate){
             state.chatById = newSate
+        },
+        setFreeStatus(state, newSate){
+            state.freeRequests = newSate
         },
     },
 
@@ -74,6 +79,12 @@ export default {
             })
         },
 
+        changeFreeRequests(context){
+            axios.get(process.env.VUE_APP_PROD_URL + '/free/requests').then(response => {
+              context.commit('setFreeStatus', response.data)
+            })
+        },
+
         changeListRequest(context){
             axios.get(process.env.VUE_APP_PROD_URL + '/list/request').then(response => {
               // console.log(response)
@@ -91,14 +102,12 @@ export default {
 
         },
 
-        changeListOpenChats(context, newData){
+        changeUserChats(context, newData){
 
-            let type = newData.type
-            let user_id = newData.user_id
+            let user_id = newData
 
-            axios.get(process.env.VUE_APP_PROD_URL + `/active/chats?type=${type}&id=${user_id}`).then(response => {
-                // console.log(response)
-                context.commit('setOpenChats', response.data)
+            axios.get(process.env.VUE_APP_PROD_URL + `/user/chats/${user_id}`).then(response => {
+                context.commit('setUserChats', response.data)
               })
         }
         

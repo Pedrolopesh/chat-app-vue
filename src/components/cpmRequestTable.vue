@@ -6,12 +6,12 @@
 
         <b-container class="bv-example-row">
 
-        <span class="mt-9 display-b" v-if="listRequestByStatus == '' ">
+        <span class="mt-9 display-b" v-if="freeRequests == '' ">
             <h3>Não possuem pedidos registrados ainda 😪</h3>
         </span>
 
         <b-row class="brake-small" cols="3" v-else>
-            <b-col class="brake-container" v-for="(item, i) in listRequestByStatus" :key='i'>
+            <b-col class="brake-container" v-for="(item, i) in freeRequests" :key='i'>
                 <!-- {{ item }} -->
                 <b-card v-if="item" class="mt-3 mp0 alg-txt-c card-style-2" :class="[item.status == 'new' ?'border-g' : 'border-o']" @click="OpenInfoModal(item)">
                     
@@ -68,14 +68,7 @@ export default {
         url:process.env.VUE_APP_PROD_URL,
 
         svgs:svgs,
-        items:[
-            {numRequest:'1', userName:'Pedro lopes', userPicture:'https://placekitten.com/300/300', placeName:'Mercado Limeira', adrres:'Rua Lauro Linhares', fee:'5,00', description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facilis fugit sunt ratione nemo voluptates ipsa minus quibusdam repudiandae suscipit!'},
-            {numRequest:'2', userName:'Fernanda', userPicture:'https://picsum.photos/500/500/?image=54', placeName:'Mercado Limeira', adrres:'Rua Lauro Linhares', fee:'5,00', description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facilis fugit sunt ratione nemo voluptates ipsa minus quibusdam repudiandae suscipit!'},
-            {numRequest:'3', userName:'Gaia Beat', userPicture:'https://placekitten.com/300/300', placeName:'Mercado Limeira', adrres:'Rua Lauro Linhares', fee:'5,00', description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facilis fugit sunt ratione nemo voluptates ipsa minus quibusdam repudiandae suscipit!' },
-            {numRequest:'4', userName:'Greatchen', userPicture:'https://placekitten.com/300/300', placeName:'Mercado Limeira', adrres:'Rua Lauro Linhares', fee:'5,00', description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facilis fugit sunt ratione nemo voluptates ipsa minus quibusdam repudiandae suscipit!' },
-            {numRequest:'5', userName:'Xuxa', userPicture:'https://placekitten.com/300/300', placeName:'Mercado Limeira', adrres:'Rua Lauro Linhares', fee:'5,00', description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facilis fugit sunt ratione nemo voluptates ipsa minus quibusdam repudiandae suscipit!' },
-            {numRequest:'6', userName:'Limeira', userPicture:'https://placekitten.com/300/300', placeName:'Mercado Limeira', adrres:'Rua Lauro Linhares', fee:'5,00', description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facilis fugit sunt ratione nemo voluptates ipsa minus quibusdam repudiandae suscipit!' },
-        ]
+
     }),
 
     components:{
@@ -97,7 +90,7 @@ export default {
             userRequestData: 'userRequestData',
             listRequest: 'listRequest',
             requestSelectedId: 'requestSelectedId',
-            listRequestByStatus: 'listRequestByStatus',
+            freeRequests: 'freeRequests',
 
         }),
 
@@ -105,17 +98,12 @@ export default {
 
     methods:{
         ...mapActions({
-            changeListRequestByStatus: 'changeListRequestByStatus',
-            changeListRequest: 'changeListRequest',
             changeRequestById: 'changeRequestById',
+            changeFreeRequests: 'changeFreeRequests',
         }),
 
         getAllRequests(){
-            // this.$http.get(this.url + '/list/request').then(response => {
-                // })
-            this.changeListRequest()
-            // this.changeListRequestByStatus('new')
-
+            this.changeFreeRequests()
         },
 
         OpenInfoModal(param){
