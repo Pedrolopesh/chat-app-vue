@@ -23,6 +23,7 @@
                         <b-avatar class="ml-2" :src='userData.imageProfile'></b-avatar>
                     </vs-button>
 
+
                     <vs-button
                         gradient
                         color="rgb(59,222,200)"
@@ -41,6 +42,19 @@
                         color="rgb(59,222,200)"
                         class="mw-w-100 mt-3"
                         size="xl"
+                        to="/RequestList"
+                        :active="active == 1"
+                        @click="active = 1"
+                    >
+                        <BIconChatDotsFill class="mr-2"/>
+                        Conversas
+                    </vs-button>
+                    
+                    <vs-button
+                        gradient
+                        color="rgb(59,222,200)"
+                        class="mw-w-100 mt-3"
+                        size="xl"
                         :active="active == 1"
                         @click="active = 1"
                     >
@@ -54,12 +68,13 @@
 <script>
 import svgs from '../../assets/svgs/svgSet';
 import componentHeader from '@/components/cpmHeader';
-import { BIconPerson, BIconReceipt } from 'bootstrap-vue'
+import { BIconPerson, BIconReceipt, BIconChatDotsFill } from 'bootstrap-vue'
 import { mapGetters, mapActions } from 'vuex';
 
 
 export default {
     data:() => ({
+            active:'',
             svgs:svgs,
             items:[
                 {prefName:'Seu Perfil', svgstitle:'whatsapp_icon'},

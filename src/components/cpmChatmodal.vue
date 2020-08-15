@@ -7,7 +7,9 @@
 
 
 
-          <div v-if="chatMessages.length > 0" class="chat-content"> 
+            <!-- <perfect-scrollbar> -->
+          <div id="container-chat" v-if="chatMessages.length > 0" class="chat-content"> 
+
 
             <div v-for="(messageObj, i) in chatMessages" :key="i" class="p15">
               
@@ -32,12 +34,22 @@
                   <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small>
                 </div>
 
+                <span v-if="i + 1 == chatMessages.length">
+                  <!-- here we call the function if it is the last item of the array,
+                  the problem is...this item is always here, so it would render anytime there was ANY update on the page...and we dont want that..
+                  
+                  so.... -->
+                    {{testFunction()}}
+                </span>
+
 
               </div>
           </div>
           <span id="lastSendedMessage"></span>
+           
 
           </div>  
+            <!-- </perfect-scrollbar> -->
         
 
             <div class="text-box-chat">
@@ -63,15 +75,20 @@ import {
   mapGetters, mapActions
 } from 'vuex';
 import sweetAlert from 'sweetalert2';
-
+// import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
+import dayjs from 'dayjs';
 
 
 export default {
-    props:['chatId'],
+  props:['chatId'],
+
+    comments:{
+      // PerfectScrollbar
+    },
   
     data:() => ({
-        
-        socket: io('http://localhost:3334'),
+      
+      socket: io('http://localhost:3334'),
         messagens:[
           {sendedName:'Fernanda', SendedMessage:'olá pedro, esse vai ser o nosso chat', sendedTimestamp:'08:00'},
         ],
@@ -89,12 +106,15 @@ export default {
         chatOrigin: {},
         chatResponder: {},
 
+        contentScrolled: false,
+        // we se a variable to decide if we want to call the last message function or not
+
     }),
     computed: {
-
-        ...mapGetters({
-            
-            userData: 'userData',
+      
+      ...mapGetters({
+        
+        userData: 'userData',
             chatById: 'chatById',
             selectedChatData: 'selectedChatData',
 
@@ -102,9 +122,14 @@ export default {
 
     },
 
+
+    updated(){
+      // alert('testeeeee ahhhhhh ahh')
+    },
+
     created() {
-        // this.renderchatMessages()
-        this.transformdate()
+      
+      this.transformdate()
         this.loadChatById()
 
         let vm = this;
@@ -116,8 +141,17 @@ export default {
     },
 
     methods: {
+      testFunction(){
+        if(!this.contentScrolled){
+          // alert('ha, go go power rangers')
+                this.scrollToLastMessage();
+          this.contentScrolled = true;
+          //  I et it to true right after calling the scroll to mesage function (so it will only run again IF we set it to alse with a new request)
+        }
+  
+      },
         ...mapActions({
-            changeChatById: 'changeChatById',
+          changeChatById: 'changeChatById',
         }),
 
         async loadChatById(){
@@ -128,8 +162,8 @@ export default {
 
           this.$http.get(this.url + `/chat/messages/${this.chatId}`)
           .then(response => {
-
-              let resp = response.data;
+            
+            let resp = response.data;
 
               this.chatCreator = resp.user_response
 
@@ -146,22 +180,25 @@ export default {
               this.chatResponder = newResponderOBJ
 
               this.chatMessages = resp.chatData;
+              this.contentScrolled = false;
+              //I eser the variable to false right after I call the get function to re dender the chat
             // this.selectedChatData = response.data
+
           })
           .catch(err => {
             console.log(err)
             sweetAlert.fire({
-                icon: 'error',
+              icon: 'error',
                 title: 'ops! algo deu errado.',
                 showConfirmButton: true
             })
           })
-
+        // this.scrollToLastMessage()
 
         },
 
         transformdate() {
-                var today = new Date();
+          var today = new Date();
                 var dd = String(today.getDate()).padStart(2, '0');
                 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
                 var yyyy = today.getFullYear();
@@ -175,69 +212,49 @@ export default {
 
         checkTypeUser(){
           let logedId = localStorage.getItem('id')
-          // console.log("usuário logado = " + logedId)
-          // console.log("Criador do chat = " + this.chatCreator)
 
-          // console.log(this.chatCreator)
           if(logedId == this.chatCreator[0]._id){
-            // console.log("Pessoa que responde / user_response")
-
+            
             this.userType = "response"
 
           }else{
             
             this.userType = "origin"
 
-            // console.log("Pessoa que manda primeira mensagem / criador do chat / user_origin")
           }
-
-          // console.log("usuário que manda a mensagem")
-          // console.log(logedId)
-
-          // console.log("user_response")
-          // console.log(this.selectedChatData.user_response[0]._id)
-          
-          // console.log("user_origin / criador do chart")
-          // console.log(this.selectedChatData.user_origin[0]._id)
-
-
         },
 
       createMessage(){
-
-
         this.checkTypeUser()
 
-            let body = { 
+            // var today = new Date();
+            var now = dayjs()
+            let time = now.format("HH:mm")
+            let date = now.format("DD/MM/YYYY")
 
-                chat_id:this.chatId,
+            let body = { 
+              
+              chat_id:this.chatId,
 
                 chatData: {
                   sender: this.userType,
                   message: this.newMessage,
-                  timestamp: this.currentTimestamp
+                  timestamp: date + '-' + time
                 }
             }
           this.socket.emit('sendMessage', body.chatData);
 
-            console.log(body)
 
-
-          // this.$http.post(this.url + '/create/chat', body)
           this.$http.put(this.url + '/send/message', body)
           .then(resp => {
-            console.log(resp)
-
+            
             if(resp.status == 200){
-
+              
               this.newMessage = ''
               setTimeout( () => { this.loadChatById() }, 500);
-              setTimeout( () => { this.location = "#view"; }, 1000);
               
-              // this.loadChatById()
-
             }else{
-
+              
               alert('erro ao manda mensagem')
 
             }
@@ -253,34 +270,14 @@ export default {
             })
           })
 
-        
-        
-        // console.log(this.chatData)
-        
-        // if(this.author.length && this.newMessage.length != ''){
-          
-        //   let MessageObject = {
-        //     user_response: this.author,
-        //     message: this.newMessage
-        //   }
-
-        //   this.socket.emit('sendMessage', MessageObject);
-        //   // this.rendermessage(MessageObject)
-        //   this.originUserMessage.push(MessageObject)
-
-        // }
-
-
       },
 
 
       listenMessages(){
-
+        
         let socket = this.socket
         this.socket.on('messageRecived', function(message) {
-
-          // this.rendermessage(message)
-          console.log(message)
+          
           this.originUserMessage.push(param)
 
         })
@@ -293,13 +290,27 @@ export default {
 
       renderchatMessages(){
         this.chatMessages.push(this.selectedChatData)
-      }
+      },
+
+      scrollToLastMessage(){
+        
+        
+        this.$nextTick(() => {
+          // here we use "$nextTick so it will only excecute the content of this function on the next rander ..meaning ,the next render after our request (on v -for_)"
+        let scrollContainer = document.querySelector('#container-chat')
+        scrollContainer.scrollTop = scrollContainer.scrollHeight;
+        // console.log(scrollContainer)
+
+        })
+
+       
+      },
         
     },
 
     watch:{
       newSocketMessage(){
-        setTimeout(() => (this.loadChatById()), 5000)
+        setTimeout(() => (this.loadChatById()), 2000)
       }
     }
 }

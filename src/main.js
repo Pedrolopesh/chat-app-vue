@@ -5,10 +5,13 @@ import axios from './util/axios'
 import store from './store'
 import router from './router'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import Vuesax from 'vuesax'
-import vmodal from 'vue-js-modal'
+import Vuesax from 'vuesax';
+import vmodal from 'vue-js-modal';
 import VueSweetalert2 from 'vue-sweetalert2';
-import VueAgile from 'vue-agile'
+import VueAgile from 'vue-agile';
+import daysjs from 'dayjs';
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
 import 'leaflet/dist/leaflet.css';
 import './assets/index.scss';
@@ -28,7 +31,8 @@ Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-
+Vue.use(PerfectScrollbar)
+Vue.use(daysjs)
 Vue.use(VueAgile)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)

@@ -14,37 +14,47 @@
                     <b-card class="p5 card-style-1 mt-4 mb-6">
                         <h2>Login</h2>
 
-                        <vs-input class="ac mt-4" type="text" placeholder="Email" v-model="email"/>
-                        <!-- <vs-input class="ac mt-4" type="password" placeholder="Senha" v-model="password"/> -->
+                    <div class="mw-w-50 ac">
 
                         <div class="center content-inputs login-input">
 
+                        <vs-input class="ac mt-4" 
+                            label-placeholder="Email"
+                            type="text" 
+                            v-model="email"
+                            icon-after
+                        >
+                            
+                            <template #icon>
+                                <span>@</span>
+                            </template>
+                        
+                        </vs-input>
+                        
+                        </div>
+                        <!-- <vs-input class="ac mt-4" type="password" placeholder="Senha" v-model="password"/> -->
+
+                        <div class="center content-inputs login-input">
                         <vs-input
                             type="password"
                             class="mt-5"
                             v-model="password"
-                            label-placeholder="Password"
+                            label-placeholder="Senha"
                             :visiblePassword="hasVisiblePassword"
                             icon-after
                             @click-icon="hasVisiblePassword = !hasVisiblePassword">
-
+                            
                             <template #icon>
-
                                 <span v-if="!hasVisiblePassword"><BIconEye/></span>
                                 <span v-else><BIconEyeSlash/></span>
-
                             </template>
-
-                            <!-- <template v-if="getProgress >= 100" #message-success>
-                                Secure password
-                            </template> -->
-
+                        
                         </vs-input>
-
                         </div>
 
+                    </div>
 
-                        <vs-button @click="tryLogin" class="mt-3" type="gradient">Entrar</vs-button>
+                        <vs-button @click="tryLogin" class="mt-4 ac" type="gradient">Entrar</vs-button>
 
                         <span class="display-b mt-3">
                             ainda não possui cadastro?
@@ -144,12 +154,14 @@ export default {
                 console.log(resp)
                 if(resp.data != '' && resp.status == 200){
                     this.$router.push('/DashBoard')
-                }else if(resp.status == 401){
+                }else if(resp.status == 403){
                     sweetAlert.fire({
                         icon: 'error',
-                        title: 'ops! algo deu errado.',
+                        title: 'Não foi encontrado nenhum usuário, tente se cadastrar.',
                         showConfirmButton: true
                     })
+                }else if(resp.status == 401){
+
                 }
             })
             .catch(err => {

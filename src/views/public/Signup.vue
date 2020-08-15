@@ -14,16 +14,35 @@
                     <b-card class="p5 card-style-1 mt-4 mb-7">
                         <h2>Cadastro</h2>
 
-                        <div class="centerx">
-                            <vs-input class="ac mt-4" type="text" placeholder="Nome" v-model="userForm.name"/>
-                            <vs-input class="ac mt-4" type="text" placeholder="Email" v-model="userForm.email"/>
-                            <vs-input class="ac mt-4" type="number" placeholder="phone" v-model="userForm.phone"/>
-                            <vs-input class="ac mt-4" type="password" placeholder="password" v-model="userForm.password"/>
+                        <div class="centerx mw-w-50 ac">
+                            <vs-input class="ac mt-5" type="text" placeholder="Nome" v-model="userForm.name"/>
+                            <vs-input class="ac mt-5" type="text" placeholder="Email" v-model="userForm.email"/>
+                            <vs-input class="ac mt-5" type="number" placeholder="phone" v-model="userForm.phone"/>
+                                <vs-input
+                                    type="password"
+                                    class="mt-5 signup-input"
+                                    v-model="userForm.password"
+                                    label-placeholder="Senha"
+                                    :progress="getProgress"
+                                    :visiblePassword="hasVisiblePassword"
+                                    icon-after
+                                    @click-icon="hasVisiblePassword = !hasVisiblePassword">
+                                     
+                                     <template #icon>
+                                        <span v-if="!hasVisiblePassword"><BIconEye/></span>
+                                        <span v-else><BIconEyeSlash/></span>
+                                    </template>
+
+                                    <template v-if="getProgress >= 100" #message-success>
+                                    Secure password
+                                    </template>
+
+                                </vs-input>
                         </div>
 
-                        <vs-button @click="signup" class="mt-3" type="gradient">Cadastrar</vs-button>
+                        <vs-button @click="signup" class="mt-4 ac" type="gradient">Cadastrar</vs-button>
 
-                        <span class="display-b mt-3">
+                        <span class="display-b mt-4">
                             já possui cadastro?
                             <a class="blue-link" @click="goToLogin()">faça o login</a>
                         </span>
@@ -31,6 +50,7 @@
                 </b-col>
             </b-row>
         </b-container>
+
     </div>
 </template>
 
@@ -42,6 +62,10 @@ export default {
     data:() => ({
         url:process.env.VUE_APP_PROD_URL,
         Svgs:Svgs,
+
+        value: '',
+        hasVisiblePassword: false,
+
         userForm:{
             name:'',
             email:'',
@@ -49,6 +73,44 @@ export default {
             password:''
         }
     }),
+
+    computed: {
+        getProgress() {
+          let progress = 0
+
+          // at least one number
+
+          if (/\d/.test(this.userForm.password)) {
+            progress += 20
+          }
+
+          // at least one capital letter
+
+          if (/(.*[A-Z].*)/.test(this.userForm.password)) {
+            progress += 20
+          }
+
+          // at menons a lowercase
+
+          if (/(.*[a-z].*)/.test(this.userForm.password)) {
+            progress += 20
+          }
+
+          // more than 5 digits
+
+          if (this.userForm.password.length >= 6) {
+            progress += 20
+          }
+
+          // at least one special character
+
+          if (/[^A-Za-z0-9]/.test(this.userForm.password)) {
+            progress += 20
+          }
+
+          return progress
+        }
+      },
 
     
     methods: {

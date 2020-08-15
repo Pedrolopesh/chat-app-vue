@@ -3,6 +3,12 @@
         <!-- <b-button @click="stateModal = true">Open Modal</b-button> -->
                         <!-- {{ createModalState }} -->
 
+        <vs-dialog width="550px" not-center blur v-model="errorModal">
+            <BIconXCircle class="icon-size-60 clr-red mb-3 mt-4"/>
+            <h2>Erro ao criar pedido</h2>
+        </vs-dialog>
+
+
         <vs-dialog width="550px" not-center blur v-model="stateModal">
         <template #header>
           <h4 class="not-margin">
@@ -110,18 +116,22 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { BIconBox, BIconGeo, BIconBasket } from 'bootstrap-vue';
+import { BIconBox, BIconGeo, BIconBasket, BIconXCircle } from 'bootstrap-vue';
 import setMapPoints from './cpmSetMapPoints'
+import sweetAlert from'sweetalert2'
 
 export default {
     components:{
         BIconBox,
         BIconGeo,
         BIconBasket,
+        BIconXCircle,
         setMapPoints
     },
 
     data:() => ({
+        errorModal:false,
+
         requestForm:{
             name:'',
             placeName:'',
@@ -131,6 +141,8 @@ export default {
         },
 
         active:'',
+
+        url:process.env.VUE_APP_PROD_URL,
 
         stateModal:false,
 
@@ -149,7 +161,7 @@ export default {
 
         ...mapActions({
             createNewRequestApp: 'createNewRequestApp',
-            changeListRequest: 'changeListRequest',
+            changeFreeRequests: 'changeFreeRequests',
         }),
         
 
@@ -169,10 +181,27 @@ export default {
                 user: loged_user
             }
             // console.log(body)
-            this.createNewRequestApp(body)
-            this.stateModal = false
-            this.changeListRequest()
-            // console.log(this.coordinateSelectedRequest.lng)
+            this.$http.post(this.url + '/create/request', body)
+            
+            .then(resp => {
+
+                if(resp.data.success == true){
+                
+                    this.requestForm = ''
+                    this.stateModal = false
+                    sweetAlert.fire({ icon: 'success', title: 'Pedido registrado com sucesso', showConfirmButton: false, timer: 1500 })
+                    this.changeFreeRequests()
+                
+                }else{
+                    this.errorModal = true
+                }
+            })
+
+            .catch(err => {
+                this.errorModal = true
+                console.log(err)
+            })
+
         }
     },
 

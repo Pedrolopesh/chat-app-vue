@@ -12,6 +12,10 @@
 .mw-w-50{
     max-width: 100%;
     width: 40%;
+    
+    @media screen and (max-width: 700px){
+        width: 80%;
+    }
 }
 .mw-w-40{
     max-width: 100%;
@@ -184,10 +188,25 @@
 
 .login-input{
     max-width: 100%;
-    width: 40%;
+    width: 100%;
     box-sizing: border-box;
     
     @media screen and (max-width: 700px){
-        width: 70%;
+        width: 90%;
+    }
+}
+
+.signup-input{
+    max-width: 100%;
+    width: 84%;
+    box-sizing: border-box;
+
+    // @media screen and (max-width: 1200px){
+    //     max-width: 100%;
+    //     width: 50%;
+    // }
+    
+    @media screen and (max-width: 800px){
+        width: 87%;
     }
 }

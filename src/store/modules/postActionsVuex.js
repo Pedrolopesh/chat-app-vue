@@ -17,13 +17,7 @@ export default {
       
             await axios.post(process.env.VUE_APP_PROD_URL + '/create/request', newData).then(response => {
               console.log(response)
-                if(response.data != ''){
-                    sweetAlert.fire({
-                        icon: 'success',
-                        title: 'Pedido registrado com sucesso',
-                        showConfirmButton: true
-                      })
-                }
+
             })
             .catch(err => {
                 console.log(err)

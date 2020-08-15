@@ -130,7 +130,7 @@ import { mapGetters, mapActions } from 'vuex';
 import { BIconCart3, BIconGeo, BIconChat, BIconX, BIconCheck2All, BIconEject } from 'bootstrap-vue';
 import DetailMap from './cpmMap';
 import sweetAlert from 'sweetalert2';
-
+import dayjs from 'dayjs';
 
 export default {
 
@@ -183,8 +183,11 @@ export default {
     methods: {
 
         ...mapActions({
+
             changeUserChats: 'changeUserChats',
-            changeUserData: 'changeUserData'
+            changeUserData: 'changeUserData',
+            changeFreeRequests: 'changeFreeRequests',
+
         }),
 
         checkTypeUser(){
@@ -210,7 +213,6 @@ export default {
         iniciateChat(param){
             let logedId = localStorage.getItem('id')
             if(logedId == param.user[0]._id){
-                console.log("IDs são iguais")
                 
                 this.alertModal = true
 
@@ -221,15 +223,9 @@ export default {
                     user_origin: logedId,
                 }
 
-                var today = new Date();
-                var dd = String(today.getDate()).padStart(2, '0');
-                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = today.getFullYear();
-
-                let hou = String(today.getHours())
-                let min = String(today.getMinutes())
-
-                today = dd + '/' + mm + '/' + yyyy + '-' + hou + ':' + min;
+                var now = dayjs()
+                let time = now.format("HH:mm")
+                let date = now.format("DD/MM/YYYY")
 
                 let body = {
                     user_response: param.user[0]._id,
@@ -237,7 +233,7 @@ export default {
                     chatData:[{
                         sender: 'origin',
                         message:'olá, ainda precisa de uma ajuda com seu pedido',
-                        timestamp: today
+                        timestamp: date + '-' + time
                     }]
                 }
 
@@ -301,6 +297,7 @@ export default {
                 if(resp.status == 200){ 
                     this.$emit('propsFunction', false)
                     this.changeUserData()
+                    this.changeFreeRequests()
                     sweetAlert.fire({ icon: 'success', title: 'Pedido alterado com sucesso', timer: 1500, showConfirmButton: false }) 
                 }
                 
@@ -333,6 +330,7 @@ export default {
                 if(resp.data.success == true){
                     this.optionsModal = false
                     this.$emit('propsFunction', false)
+                    this.changeFreeRequests()
                     sweetAlert.fire({ icon: 'success', title: 'Pedido alterado com sucesso', timer: 1500, showConfirmButton: false })
                     this.changeUserData()
                 }
