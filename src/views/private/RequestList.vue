@@ -12,7 +12,7 @@
             </span>
 
 
-            <div class="container-list-chats ac" v-for="(item, i) in userData.request" :key='i'>
+            <div class="container-list-chats ac mt-4" v-for="(item, i) in userData.request" :key='i'>
                 <!-- <b-btn @click="selectRequest(item)" variant="outline-primary" class="chat-item display-b ac mt-2">
                     <div class="display-f mt-2">
                         
@@ -44,7 +44,7 @@
             <div>
                 <vs-dialog width="550px" not-center blur v-model="stateDetailModal">
                     
-                    <DetailModal @closeModal='closeModal'/>
+                    <DetailModal @propsFunction='closeModal'/>
 
                 </vs-dialog>
 
@@ -101,13 +101,8 @@ export default {
         }),
 
         selectRequest(param){
-            
-            // this.changeRequestById(param._id)
-
-            console.log(param)
 
             this.$store.commit("setuserRequestData", param);
-
             this.stateDetailModal = true
 
         },
@@ -122,8 +117,7 @@ export default {
             this.$http.get(this.url+`/user/${id}`).then(Response => {
 
                 this.$store.commit("setUserData", Response.data);
-
-                console.log(this.userData.request)
+                // console.log(this.userData.request)
 
             })
 
@@ -132,7 +126,6 @@ export default {
 
         closeModal(){
 
-            console.log('dsadsasadsadsa')
             this.stateDetailModal = false
 
         }

@@ -45,7 +45,7 @@
         </b-container>
 
         <vs-dialog width="550px" not-center blur v-model="stateDetailModal">
-            <DetailModal/>
+            <DetailModal @propsFunction="closeModal"/>
         </vs-dialog>
 
 
@@ -113,16 +113,14 @@ export default {
             this.$store.commit("setuserRequestData", param);
             this.stateDetailModal = true
             // console.log(param)
-            // this.showModal()
+
         },
 
+        closeModal(param){
+            this.stateDetailModal = false
+        }
 
-        showModal() {
-            this.$refs['userRequest-modal'].show()
-        },
-        hideModal() {
-            this.$refs['userRequest-modal'].hide()
-        },
+
     }
 }
 </script>

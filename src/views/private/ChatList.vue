@@ -245,7 +245,6 @@ export default {
 
         selectUser(param){
             
-            console.log(param._id)
             this.selectedChatId = param._id
 
             // this.$store.commit("setSelectedChatData", param);

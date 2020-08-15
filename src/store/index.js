@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import postActionsVuex from './modules/postActionsVuex'
 import getActionVuex from './modules/getActionVuex'
+import putActionVuex from './modules/putActionVuex'
 
 Vue.use(Vuex)
 
@@ -70,6 +71,7 @@ export default new Vuex.Store({
   },
   modules: {
     postActionsVuex,
-    getActionVuex
+    getActionVuex,
+    putActionVuex
   }
 })

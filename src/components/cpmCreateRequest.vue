@@ -152,13 +152,6 @@ export default {
             changeListRequest: 'changeListRequest',
         }),
         
-        show () {
-            this.$modal.show('create-request-modal');
-        },
-
-        hide () {
-            this.$modal.hide('create-request-modal');
-        },
 
         createRequest(){
             this.active = 6

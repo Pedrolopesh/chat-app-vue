@@ -53,6 +53,7 @@ export default {
             await axios.get(process.env.VUE_APP_PROD_URL + `/user/${id}`).then(response => {
 
                 context.commit('setUserData', response.data)
+                console.log("rodou de novo")
             
             })
         },

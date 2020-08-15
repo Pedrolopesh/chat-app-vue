@@ -56,7 +56,7 @@
 
                </div>
 
-               <div v-if="userRequestData.status == 'taked'">
+               <div v-if="userRequestData.status == 'completed'">
                     <vs-button size="large" @click="reopenRequestStatus(userRequestData)" class="mt-4 ac" warn gradient>
                         Reabrir Pedido
                     <BIconEject class="ml-2 icon-size-20"/>
@@ -82,19 +82,30 @@
                 <h2>Quem atendeu ao seu pedio ?</h2>
                 <p>Pedido alterado com sucesso</p>
 
-                {{ selectedUser }}
-
-                <vs-select 
-                    placeholder="Select"
-                    class="ac"
+                <b-form-select
+                    class="mw-w-70"
                     v-model="selectedUser"
+                    :options="userOptionsChats"
+                    value-field="user_id"
+                    text-field="name"
                 >
-                    <vs-option v-for="(i, item) in arrayItems" :key="item" label="Vuesax" :value="i.id"> {{ i.name }} </vs-option>
-                </vs-select>
+                </b-form-select>
+
+                <vs-button 
+                    size="large" 
+                    @click="answerRequest" 
+                    class="mt-4 ac" 
+                    warn 
+                    gradient
+                >
+                    Confirma
+                </vs-button>
+
 
             </div>
         </vs-dialog>
         
+
         <vs-dialog blur v-model="sucessModal">
             <h1>Sucesso</h1>
             <p>Pedido alterado com sucesso</p>
@@ -149,9 +160,7 @@ export default {
 
         url:process.env.VUE_APP_PROD_URL,
 
-        arrayItems:[
-            {id:1, name:'Vuex'}, {id:2, name:'Vuesax 4'}, {id:3, name:'Vuetify'}, {id:4, name:'vue'}
-        ]
+        userOptionsChats:[]
 
     }),
 
@@ -174,22 +183,23 @@ export default {
     methods: {
 
         ...mapActions({
-            changeUserChats: 'changeUserChats'
+            changeUserChats: 'changeUserChats',
+            changeUserData: 'changeUserData'
         }),
 
         checkTypeUser(){
             let logedId = localStorage.getItem('id')
 
-            console.log(logedId)
-            console.log(this.userRequestData)
+            // console.log(logedId)
+            // console.log(this.userRequestData)
 
             if(logedId == this.userRequestData.user[0]._id || logedId == this.userRequestData.user[0]){
                 
-                console.log("IDs são iguais")
+                // console.log("IDs são iguais")
                 this.requestPreferences = true
 
             }else{
-                console.log("IDs diferentes")
+                // console.log("IDs diferentes")
                 
                 this.requestPreferences = false
             
@@ -198,15 +208,6 @@ export default {
         
 
         iniciateChat(param){
-            // console.log("ID DO PEDIDO")
-            // console.log(param._id)
-            
-            // console.log("ID DO USUÀRIO QUE CRIOU O PEDIDO")
-            // console.log(param.user[0]._id)
-
-            // console.log("ID DO USUÀRIO QUE ESTÀ LOGADO")
-            // console.log(id)
-
             let logedId = localStorage.getItem('id')
             if(logedId == param.user[0]._id){
                 console.log("IDs são iguais")
@@ -258,10 +259,13 @@ export default {
                     
                     this.$http.put(this.url + '/update/status', body)
                     .then(resp => {
-                        console.log("Foi")
+                        // console.log("Foi")
+                        if(resp.data.success == 200){
+                            this.redirectModal = true
+                        }else{
+                            sweetAlert.fire({ icon: 'error', title: 'Erro ao iniciar conversa', showConfirmButton: false, timer: 1500 })
+                        }
                     })
-
-                    this.redirectModal = true
 
                     setTimeout( () => {this.$router.push('/ChatList')}, 10000);
                 }
@@ -269,6 +273,8 @@ export default {
             })
             .catch(err => {
                 console.log(err)
+                sweetAlert.fire({ icon: 'error', title: 'Erro ao iniciar conversa', showConfirmButton: false, timer: 1500 })
+
                 this.errorModal = true
             })
 
@@ -290,19 +296,49 @@ export default {
             console.log(body)
 
             this.$http.put(this.url + '/update/status', body)
-            .then(response => {
+            .then(resp => {
 
-                if(response.status == 200){ this.sucessModal = true }
+                if(resp.status == 200){ 
+                    this.$emit('propsFunction', false)
+                    this.changeUserData()
+                    sweetAlert.fire({ icon: 'success', title: 'Pedido alterado com sucesso', timer: 1500, showConfirmButton: false }) 
+                }
+                
+                else{
+                    this.$emit('propsFunction', false)
+                    this.changeUserData()
+                    sweetAlert.fire({ icon: 'error', title: 'Erro ao alterar pedido', showConfirmButton: false, timer: 1500 })
+                }
 
             })
 
             .catch(err => {
                 console.log(err)
-
-                if(response.status == 200){ this.errorModal = true }
-          })
+                this.$emit('propsFunction', false)
+                this.changeUserData()
+                sweetAlert.fire({ icon: 'error', title: 'Erro ao alterar pedido', showConfirmButton: false, timer: 1500 })
+            })
         },
 
+        answerRequest(){
+
+            let body = {
+                status: 'completed',
+                request_id: this.userRequestData._id,
+                user_answered: this.selectedUser
+            }
+
+            this.$http.put(this.url + '/answer/request', body)
+            .then(resp => {
+                if(resp.data.success == true){
+                    this.optionsModal = false
+                    this.$emit('propsFunction', false)
+                    sweetAlert.fire({ icon: 'success', title: 'Pedido alterado com sucesso', timer: 1500, showConfirmButton: false })
+                    this.changeUserData()
+                }
+
+            })
+        },
 
         cancelRequestStatus(param){
             console.log(param._id)
@@ -311,12 +347,9 @@ export default {
         async attendRequestStatus(param){
             this.optionsModal = true
 
-            console.log("ysgdigasyuidgsayuigdia")
-            
             let logedId = localStorage.getItem('id')
-
             this.$http.get(this.url + `/user/chats/${logedId}`).then(resp => {
-                console.log(resp.data)
+                this.userOptionsChats = resp.data
             })
             
         //     let body = {
