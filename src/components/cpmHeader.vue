@@ -1,11 +1,10 @@
 <template>
   <div>
     <b-container class="p0 mb-4">
-      <b-row class="ac header-container">
-          <b-col class="p0"> <span class="icon-header"> <BIconList v-b-toggle.sidebar-1/> </span></b-col>
-          <b-col @click="goToSetings()"><b-avatar class="ml-a display-b cp" :src='userData.imageProfile'></b-avatar>
-        </b-col>
-      </b-row>
+      <div class="ac header-container">
+          <div class="p0 container-rigth-menu"> <span class="icon-header"> <BIconList v-b-toggle.sidebar-1/> </span></div>
+          <div @click="goToSetings()"><b-avatar class="ml-a display-b cp" :src='userData.imageProfile'></b-avatar></div>
+      </div>
     </b-container>
 
     <b-sidebar id="sidebar-1" title="Menu" shadow>
