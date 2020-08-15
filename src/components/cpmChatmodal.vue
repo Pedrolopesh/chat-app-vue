@@ -88,7 +88,7 @@ export default {
   
     data:() => ({
       
-      socket: io('http://localhost:3334'),
+      socket: io(process.env.VUE_APP_PROD_URL),
         messagens:[
           {sendedName:'Fernanda', SendedMessage:'olá pedro, esse vai ser o nosso chat', sendedTimestamp:'08:00'},
         ],
