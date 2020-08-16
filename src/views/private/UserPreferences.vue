@@ -42,7 +42,7 @@
                         color="rgb(59,222,200)"
                         class="mw-w-100 mt-3"
                         size="xl"
-                        to="/RequestList"
+                        to="/ChatList"
                         :active="active == 1"
                         @click="active = 1"
                     >

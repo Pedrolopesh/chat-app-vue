@@ -7,6 +7,9 @@
 @import './_align.scss';
 
 
+.hiden-input{
+    display: none;
+}
 
 button, input, textarea, svg{
     &:focus {outline:0 !important}

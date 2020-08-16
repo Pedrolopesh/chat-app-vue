@@ -7,7 +7,14 @@
             <div class="ac card-style-1 p15 mw-w-25">
 
                 <div v-if="editResources == false">
-                    <b-avatar size="7rem" :src='userData.imageProfile'></b-avatar>
+                    
+                    <div @click="changePicture">
+                        <b-avatar v-if="!uptadedImage" class="cp" size="7rem" :src='userData.imageProfile'></b-avatar>
+
+                        <b-avatar v-if="uptadedImage" class="cp" size="7rem" :src='imageUrl'></b-avatar>
+                        <input @change="onFilePicked" type="file" class="hiden-input" ref="fileInput" accept="image/*">
+                    </div>
+
                     <h2 class="mt-2 display-b">{{ userData.name }}</h2>
                     <h5 class="mt-2 display-b">{{ userData.email }}</h5>
                     <h5 class="mt-2 display-b">{{ userData.phone }}</h5>
@@ -18,7 +25,8 @@
                     <BIconPencil href="#upload" class="icon-size-30"/>
                 </b-avatar> -->
 
-                <b-form-file @change="updateImageProfile" size="sm"></b-form-file>
+                <!-- <b-form-file @change="updateImageProfile" size="sm"></b-form-file> -->
+
                  <vs-input class="mt-3 display-b" v-model="newUserData.name" placeholder="Name" />
 
                  <vs-input class="mt-3 display-b" v-model="newUserData.email" placeholder="e-mail" />
@@ -135,10 +143,12 @@ export default {
     },
 
     data:() =>({
+        uptadedImage: false,
         editResources: false,
         alertModal: false,
         alertModalFile: false,
 
+        imageUrl:'',
         selectedFile:'',
 
         newUserData:{
@@ -170,6 +180,35 @@ export default {
             this.$router.push('/Home')
         },
 
+        changePicture(){
+            this.uptadedImage = true
+            this.$refs.fileInput.click()
+        },
+
+        onFilePicked(event){
+          const files = event.target.files
+          let fileName = files[0].filename
+          this.selectedFile = event.target.files[0]
+
+          const fileReader = new FileReader()
+          fileReader.addEventListener('load', () => { this.imageUrl = fileReader.result })
+          fileReader.readAsDataURL(files[0])
+
+          const fd = new FormData();
+          fd.append('photo', this.selectedFile)
+          fd.append('user_id', this.userData._id)
+
+          this.$http.put(this.url + '/update/user/image', fd )
+          .then(resp => {
+            // console.log(resp)
+            sweetAlert.fire({ icon: 'success', title: 'Imagem alterada com successo', showConfirmButton: false, timer: 1500 })
+          })
+          .catch(err => {
+            sweetAlert.fire({ icon: 'error', title: 'ops! algo deu errado.', showConfirmButton: false, timer: 1500 })
+          })
+
+        },
+
         updateImageProfile(event){
             let selectedFile = event.target.files[0]
 
@@ -185,15 +224,6 @@ export default {
             }
 
             else{
-
-                const fd = new FormData();
-                fd.append('photo', this.selectedFile)
-                fd.append('user_id', this.userData._id)
-
-                this.$http.put(this.url + '/update/user/image', fd )
-                .then(resp => {
-                    console.log(resp)
-                })
 
                 let body = {
                     
@@ -215,22 +245,14 @@ export default {
                         this.changeUserData()
                         this.editResources = false
 
-                        sweetAlert.fire({
-                            icon: 'success',
-                            title: 'Usuário alterado com sucesso',
-                            showConfirmButton: true
-                        })
+                        sweetAlert.fire({ icon: 'success', title: 'Usuário alterado com sucesso', showConfirmButton: true })
                     }
                     
                 })
 
                 .catch(err => {
                     console.log(err)
-                    sweetAlert.fire({
-                        icon: 'error',
-                        title: 'ops! algo deu errado.',
-                        showConfirmButton: true
-                    })
+                    sweetAlert.fire({ icon: 'error', title: 'ops! algo deu errado.', showConfirmButton: true })
                 })
             }
         },
