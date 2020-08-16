@@ -88,13 +88,12 @@ export default {
   
     data:() => ({
       
-      socket: io(process.env.VUE_APP_PROD_URL),
+      socket: io('https://help-delivery-app.herokuapp.com/'),
         messagens:[
           {sendedName:'Fernanda', SendedMessage:'olá pedro, esse vai ser o nosso chat', sendedTimestamp:'08:00'},
         ],
 
         newMessage:'',
-        currentTimestamp:'',
 
         userType:'',
 
@@ -129,10 +128,13 @@ export default {
 
     created() {
       
-      this.transformdate()
         this.loadChatById()
 
         let vm = this;
+        this.socket.on('connection', (socket) => {
+          console.log('User conected on socket')
+        })
+
         this.socket.on('messageRecived', function(message) {
           // console.log(message)
           vm.newSocketMessage.push(message)
@@ -195,18 +197,6 @@ export default {
           })
         // this.scrollToLastMessage()
 
-        },
-
-        transformdate() {
-          var today = new Date();
-                var dd = String(today.getDate()).padStart(2, '0');
-                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = today.getFullYear();
-
-                let hou = String(today.getHours())
-                let min = String(today.getMinutes())
-
-                this.currentTimestamp =  today = dd + '/' + mm + '/' + yyyy + '-' + hou + ':' + min;
         },
 
 
