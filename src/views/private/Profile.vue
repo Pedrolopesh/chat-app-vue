@@ -217,7 +217,7 @@ export default {
 
         confirmUpdate(){
 
-            if( this.newUserData.name == '' ||  this.newUserData.email == '' || this.newUserData.phone == '' || this.selectedFile == ''){
+            if( this.newUserData.name == '' ||  this.newUserData.email == '' || this.newUserData.phone == ''){
                 
                 this.alertModal = true
             

@@ -12,7 +12,7 @@ import VueAgile from 'vue-agile';
 import daysjs from 'dayjs';
 import PerfectScrollbar from 'vue2-perfect-scrollbar'
 import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
-import firebase from './util/firebase';
+// import firebase from './util/firebase';
 
 import 'leaflet/dist/leaflet.css';
 import './assets/index.scss';
@@ -32,7 +32,7 @@ Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-Vue.use(firebase)
+// Vue.use(firebase)
 Vue.use(PerfectScrollbar)
 Vue.use(daysjs)
 Vue.use(VueAgile)

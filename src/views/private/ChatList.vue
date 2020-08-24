@@ -13,6 +13,7 @@
             <br />
             no data: {{ noData }}
             <br /> -->
+            {{ responseData }}
             <span v-if="responseData">
                 <b-spinner label="Spinning"></b-spinner>
                 <h3>Carregando...</h3>
@@ -192,7 +193,7 @@ export default {
                     this.checkTypeUser(resp.data)
 
                     this.items.push(resp.data)
-                    // setTimeout( () => {  this.checkDatas() }, 200);
+                    setTimeout( () => {  this.checkDatas() }, 200);
                 })
                 .catch(err => {
                     this.responseData = false
@@ -234,6 +235,12 @@ export default {
                 this.userType = 'user_origin'
                 this.requestPreferences = false
             
+            }
+        },
+
+        checkDatas(){
+            if(this.responseData){
+                console.log("carregamento ativo")
             }
         },
 
